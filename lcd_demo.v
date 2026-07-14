@@ -180,6 +180,13 @@ module lcd_demo (
     reg [5:0]  min;
     reg [4:0]  hour;
 
+    // Power-up at 4:32 PM
+    initial begin
+        hour = 5'd16;
+        min  = 6'd32;
+        sec  = 6'd0;
+    end
+
     // 1-second tick from 100ms tick (10 counts)
     always @(posedge clk) begin
         if (tick_100ms) begin
