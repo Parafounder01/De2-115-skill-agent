@@ -1,0 +1,41 @@
+# Quartus Settings File — DE2-115 LCD Demo ("display de2-115 agent working")
+set_global_assignment -name FAMILY "Cyclone IV E"
+set_global_assignment -name DEVICE EP4CE115F29C7
+set_global_assignment -name TOP_LEVEL_ENTITY lcd_demo
+set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
+set_global_assignment -name SOURCE_FILE lcd_demo.v
+
+# ── Clock ──────────────────────────────────────────────────
+set_location_assignment -to clk      PIN_Y2    # CLOCK_50 (50 MHz)
+
+# ── LCD 16x2 Module (HD44780, 8-bit mode) ──────────────────
+set_location_assignment -to lcd_data[0] PIN_L3
+set_location_assignment -to lcd_data[1] PIN_L1
+set_location_assignment -to lcd_data[2] PIN_L2
+set_location_assignment -to lcd_data[3] PIN_K7
+set_location_assignment -to lcd_data[4] PIN_K1
+set_location_assignment -to lcd_data[5] PIN_K2
+set_location_assignment -to lcd_data[6] PIN_M3
+set_location_assignment -to lcd_data[7] PIN_M5
+
+set_location_assignment -to lcd_en   PIN_L4
+set_location_assignment -to lcd_rw   PIN_M1
+set_location_assignment -to lcd_rs   PIN_M2
+set_location_assignment -to lcd_on   PIN_L5
+set_location_assignment -to lcd_blon PIN_L6
+
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to lcd_data[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to lcd_data[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to lcd_data[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to lcd_data[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to lcd_data[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to lcd_data[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to lcd_data[6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to lcd_data[7]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to lcd_en
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to lcd_rw
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to lcd_rs
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to lcd_on
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to lcd_blon
+
+set_global_assignment -name LAST_QUARTUS_VERSION 10.0
