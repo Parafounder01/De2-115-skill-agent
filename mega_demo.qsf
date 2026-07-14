@@ -1,0 +1,143 @@
+# Quartus Settings File — DE2-115 Mega Demo (evil eye + clock + LEDs + LCD)
+set_global_assignment -name FAMILY "Cyclone IV E"
+set_global_assignment -name DEVICE EP4CE115F29C7
+set_global_assignment -name TOP_LEVEL_ENTITY mega_demo
+set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
+set_global_assignment -name SOURCE_FILE mega_demo.v
+
+# ── Clock
+set_location_assignment -to clk     PIN_Y2
+
+# ── HEX7 (hour12 tens)
+set_location_assignment -to hex7[0] PIN_AD17
+set_location_assignment -to hex7[1] PIN_AE17
+set_location_assignment -to hex7[2] PIN_AG17
+set_location_assignment -to hex7[3] PIN_AH17
+set_location_assignment -to hex7[4] PIN_AF17
+set_location_assignment -to hex7[5] PIN_AG18
+set_location_assignment -to hex7[6] PIN_AA14
+
+# ── HEX6 (hour12 ones)
+set_location_assignment -to hex6[0] PIN_AA17
+set_location_assignment -to hex6[1] PIN_AB16
+set_location_assignment -to hex6[2] PIN_AA16
+set_location_assignment -to hex6[3] PIN_AB17
+set_location_assignment -to hex6[4] PIN_AB15
+set_location_assignment -to hex6[5] PIN_AA15
+set_location_assignment -to hex6[6] PIN_AC17
+
+# ── HEX5 (minutes tens)
+set_location_assignment -to hex5[0] PIN_AD18
+set_location_assignment -to hex5[1] PIN_AC18
+set_location_assignment -to hex5[2] PIN_AB18
+set_location_assignment -to hex5[3] PIN_AH19
+set_location_assignment -to hex5[4] PIN_AG19
+set_location_assignment -to hex5[5] PIN_AF18
+set_location_assignment -to hex5[6] PIN_AH18
+
+# ── HEX4 (minutes ones)
+set_location_assignment -to hex4[0] PIN_AB19
+set_location_assignment -to hex4[1] PIN_AA19
+set_location_assignment -to hex4[2] PIN_AG21
+set_location_assignment -to hex4[3] PIN_AH21
+set_location_assignment -to hex4[4] PIN_AE19
+set_location_assignment -to hex4[5] PIN_AF19
+set_location_assignment -to hex4[6] PIN_AE18
+
+# ── HEX3 (seconds tens)
+set_location_assignment -to hex3[0] PIN_V21
+set_location_assignment -to hex3[1] PIN_U21
+set_location_assignment -to hex3[2] PIN_AB20
+set_location_assignment -to hex3[3] PIN_AA21
+set_location_assignment -to hex3[4] PIN_AD24
+set_location_assignment -to hex3[5] PIN_AF23
+set_location_assignment -to hex3[6] PIN_Y19
+
+# ── HEX2 (seconds ones)
+set_location_assignment -to hex2[0] PIN_AA25
+set_location_assignment -to hex2[1] PIN_AA26
+set_location_assignment -to hex2[2] PIN_Y25
+set_location_assignment -to hex2[3] PIN_W26
+set_location_assignment -to hex2[4] PIN_Y26
+set_location_assignment -to hex2[5] PIN_W27
+set_location_assignment -to hex2[6] PIN_W28
+
+# ── HEX1 (AM/PM)
+set_location_assignment -to hex1[0] PIN_M24
+set_location_assignment -to hex1[1] PIN_Y22
+set_location_assignment -to hex1[2] PIN_W21
+set_location_assignment -to hex1[3] PIN_W22
+set_location_assignment -to hex1[4] PIN_W25
+set_location_assignment -to hex1[5] PIN_U23
+set_location_assignment -to hex1[6] PIN_U24
+
+# ── HEX0 (blank)
+set_location_assignment -to hex0[0] PIN_G18
+set_location_assignment -to hex0[1] PIN_F22
+set_location_assignment -to hex0[2] PIN_E17
+set_location_assignment -to hex0[3] PIN_L26
+set_location_assignment -to hex0[4] PIN_L25
+set_location_assignment -to hex0[5] PIN_J22
+set_location_assignment -to hex0[6] PIN_H22
+
+# ── LEDR[17:0] (dancing red LEDs)
+set_location_assignment -to ledr[0]  PIN_G19
+set_location_assignment -to ledr[1]  PIN_F19
+set_location_assignment -to ledr[2]  PIN_E19
+set_location_assignment -to ledr[3]  PIN_F21
+set_location_assignment -to ledr[4]  PIN_F18
+set_location_assignment -to ledr[5]  PIN_E18
+set_location_assignment -to ledr[6]  PIN_J19
+set_location_assignment -to ledr[7]  PIN_H19
+set_location_assignment -to ledr[8]  PIN_J17
+set_location_assignment -to ledr[9]  PIN_G17
+set_location_assignment -to ledr[10] PIN_J15
+set_location_assignment -to ledr[11] PIN_H16
+set_location_assignment -to ledr[12] PIN_J16
+set_location_assignment -to ledr[13] PIN_H17
+set_location_assignment -to ledr[14] PIN_F15
+set_location_assignment -to ledr[15] PIN_G15
+set_location_assignment -to ledr[16] PIN_G16
+set_location_assignment -to ledr[17] PIN_H15
+
+# ── LEDG[7:0] (green LEDs)
+set_location_assignment -to ledg[0] PIN_E21
+set_location_assignment -to ledg[1] PIN_E22
+set_location_assignment -to ledg[2] PIN_E25
+set_location_assignment -to ledg[3] PIN_E24
+set_location_assignment -to ledg[4] PIN_H21
+set_location_assignment -to ledg[5] PIN_G20
+set_location_assignment -to ledg[6] PIN_G22
+set_location_assignment -to ledg[7] PIN_G21
+
+# ── LCD 16x2 Module
+set_location_assignment -to lcd_data[0] PIN_L3
+set_location_assignment -to lcd_data[1] PIN_L1
+set_location_assignment -to lcd_data[2] PIN_L2
+set_location_assignment -to lcd_data[3] PIN_K7
+set_location_assignment -to lcd_data[4] PIN_K1
+set_location_assignment -to lcd_data[5] PIN_K2
+set_location_assignment -to lcd_data[6] PIN_M3
+set_location_assignment -to lcd_data[7] PIN_M5
+
+set_location_assignment -to lcd_en   PIN_L4
+set_location_assignment -to lcd_rw   PIN_M1
+set_location_assignment -to lcd_rs   PIN_M2
+set_location_assignment -to lcd_on   PIN_L5
+set_location_assignment -to lcd_blon PIN_L6
+
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to lcd_data[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to lcd_data[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to lcd_data[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to lcd_data[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to lcd_data[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to lcd_data[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to lcd_data[6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to lcd_data[7]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to lcd_en
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to lcd_rw
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to lcd_rs
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to lcd_on
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to lcd_blon
+
+set_global_assignment -name LAST_QUARTUS_VERSION 10.0
