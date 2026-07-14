@@ -1,0 +1,12 @@
+# Quartus build artifacts
+db/
+incremental_db/
+output_files/*.rpt
+output_files/*.summary
+output_files/*.done
+output_files/*.pin
+output_files/*.htm
+
+# MCP/Node
+node_modules/
+package-lock.json
