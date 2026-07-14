@@ -19,13 +19,21 @@ module lcd_demo (
     output       lcd_on,   // backlight power
     output       lcd_blon,  // backlight on
 
-    // Dancing LEDs
+    // Half-adder inputs
+    input  sw17,         // SW17 — A
+    input  sw16,         // SW16 — B
+
+    // Dancing LEDs + half-adder outputs
     output [17:0] ledr,
 
     // HEX clock display (24h HH:MM:SS)
     output [6:0] hex7, hex6, hex5, hex4,
                  hex3, hex2, hex1, hex0
 );
+
+    // Half adder
+    wire ha_sum   = sw17 ^ sw16;
+    wire ha_carry = sw17 & sw16;
 
     assign lcd_on  = 1'b1;
     assign lcd_blon = 1'b1;
@@ -228,18 +236,21 @@ module lcd_demo (
     assign hex0 = 7'b1111111;  // blank
 
     // ============================================================
-    //  Dancing LED — bounces a single lit LED across LEDR[17:0]
+    //  Dancing LED — bounces a single lit LED across LEDR[15:0]
+    //  Half adder (SW17^SW16) drives LEDR[17:16]
     // ============================================================
     reg [24:0] dance_cnt;
-    reg [17:0] ledr_r;
-    reg        dance_dir;  // 0=toward 17, 1=toward 0
+    reg [15:0] ledr_r;
+    reg        dance_dir;  // 0=toward 15, 1=toward 0
     localparam DANCE_STEP = 25'd1_500_000;  // 30ms @ 50 MHz
 
-    assign ledr = ledr_r;
+    assign ledr[17]   = ha_carry;   // carry
+    assign ledr[16]   = ha_sum;     // sum
+    assign ledr[15:0] = ledr_r;
 
     initial begin
         dance_cnt <= 25'd0;
-        ledr_r    <= 18'h0_0001;
+        ledr_r    <= 16'h0001;
         dance_dir <= 1'b0;
     end
 
@@ -247,7 +258,7 @@ module lcd_demo (
         if (dance_cnt >= DANCE_STEP) begin
             dance_cnt <= 25'd0;
             if (dance_dir == 1'b0) begin
-                if (ledr_r[17]) begin dance_dir <= 1'b1; ledr_r <= ledr_r >> 1; end
+                if (ledr_r[15]) begin dance_dir <= 1'b1; ledr_r <= ledr_r >> 1; end
                 else ledr_r <= ledr_r << 1;
             end else begin
                 if (ledr_r[0]) begin dance_dir <= 1'b0; ledr_r <= ledr_r << 1; end
