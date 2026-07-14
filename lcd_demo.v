@@ -1,8 +1,8 @@
 // ============================================================
 //  lcd_demo.v — DE2-115 16x2 LCD Message Display
 //
-//  Line 1: "display de2-115 "
-//  Line 2: "agent working   "
+//  Line 1: "hello           "
+//  Line 2: "Dr.Sugantha mam "
 //
 //  Drives the HD44780-compatible LCD module in 8-bit mode.
 //  Uses a single 100ms tick for all timing.
@@ -40,17 +40,17 @@ module lcd_demo (
     reg [4:0] char_idx;
 
     initial begin
-        char_rom[0]  = "d"; char_rom[1]  = "i"; char_rom[2]  = "s";
-        char_rom[3]  = "p"; char_rom[4]  = "l"; char_rom[5]  = "a";
-        char_rom[6]  = "y"; char_rom[7]  = " "; char_rom[8]  = "d";
-        char_rom[9]  = "e"; char_rom[10] = "2"; char_rom[11] = "-";
-        char_rom[12] = "1"; char_rom[13] = "1"; char_rom[14] = "5";
+        char_rom[0]  = "h"; char_rom[1]  = "e"; char_rom[2]  = "l";
+        char_rom[3]  = "l"; char_rom[4]  = "o"; char_rom[5]  = " ";
+        char_rom[6]  = " "; char_rom[7]  = " "; char_rom[8]  = " ";
+        char_rom[9]  = " "; char_rom[10] = " "; char_rom[11] = " ";
+        char_rom[12] = " "; char_rom[13] = " "; char_rom[14] = " ";
         char_rom[15] = " ";
-        char_rom[16] = "a"; char_rom[17] = "g"; char_rom[18] = "e";
-        char_rom[19] = "n"; char_rom[20] = "t"; char_rom[21] = " ";
-        char_rom[22] = "w"; char_rom[23] = "o"; char_rom[24] = "r";
-        char_rom[25] = "k"; char_rom[26] = "i"; char_rom[27] = "n";
-        char_rom[28] = "g"; char_rom[29] = " "; char_rom[30] = " ";
+        char_rom[16] = "D"; char_rom[17] = "r"; char_rom[18] = ".";
+        char_rom[19] = "S"; char_rom[20] = "u"; char_rom[21] = "g";
+        char_rom[22] = "a"; char_rom[23] = "n"; char_rom[24] = "t";
+        char_rom[25] = "h"; char_rom[26] = "a"; char_rom[27] = " ";
+        char_rom[28] = "m"; char_rom[29] = "a"; char_rom[30] = "m";
         char_rom[31] = " ";
     end
 
