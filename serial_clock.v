@@ -19,6 +19,11 @@
 //  Between UART frames the clock keeps running via its
 //  internal 1-second tick from the 50 MHz oscillator.
 //  KEY0 resets to 00:00:00 (24-hour).
+//
+//  KEY3 → UART TX: pressing KEY[3] transmits byte 0xBB at 115200 baud
+//  on the RS-232 TX line.  Connect to PC serial port and run:
+//    .\listen-key.ps1 -ComPort <port>
+//  to simulate a Windows key press on every FPGA button press.
 // ============================================================
 
 `include "time_init.v"
@@ -27,6 +32,8 @@ module serial_clock (
     input  clk,          // 50 MHz (PIN_Y2)
     input  rst_n,        // KEY0 (active-low, PIN_M23)
     input  uart_rx,      // UART RXD (PIN_G12)
+    input  key3,         // KEY3 (active-low, PIN_R24) → sends Win key via UART TX
+    output uart_tx,      // UART TXD (PIN_G14)
     output [6:0] hex7,   // hour12 tens  (blank/1)
     output [6:0] hex6,   // hour12 ones  (0-9)
     output [6:0] hex5,   // minutes tens (0-5)
@@ -279,5 +286,121 @@ module serial_clock (
     assign hex2 = seg7(sec0);
     assign hex1 = is_pm ? SEG_P : SEG_A;
     assign hex0 = SEG_BLANK;
+
+    // ============================================================
+    //  8. KEY3 debouncer
+    //     KEY[3] on DE2-115 is active-low; debounce for ~10ms
+    // ============================================================
+    localparam DB_CNT_MAX = 20'd500_000;  // 10 ms @ 50 MHz
+    reg [19:0] db_cnt;
+    reg        db_key3, key3_sync, key3_prev;
+
+    always @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            db_cnt    <= 0;
+            db_key3   <= 1'b1;
+            key3_sync <= 1'b1;
+            key3_prev <= 1'b1;
+        end else begin
+            key3_prev <= key3_sync;
+            key3_sync <= key3;
+
+            // Debounce: wait for stable low for DB_CNT_MAX cycles
+            if (key3_sync != db_key3) begin
+                if (db_cnt == DB_CNT_MAX) begin
+                    db_key3 <= key3_sync;
+                    db_cnt  <= 0;
+                end else begin
+                    db_cnt <= db_cnt + 20'd1;
+                end
+            end else begin
+                db_cnt <= 0;
+            end
+        end
+    end
+
+    // Rising edge on the debounced key (active-low → low means pressed)
+    wire key3_press = !db_key3 && key3_prev;  // actually: was high, now low = press
+
+    // ============================================================
+    //  9. UART transmitter — 115200 baud, 8N1
+    //     Sends key byte 0xBB when KEY3 is pressed
+    // ============================================================
+    localparam TX_CMD = 8'hBB;
+
+    reg [1:0]  tx_state;
+    reg [8:0]  tx_baud_cnt;
+    reg [3:0]  tx_bit_idx;
+    reg [7:0]  tx_shift;
+    reg        tx_busy;
+
+    always @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            tx_state    <= 0;
+            tx_baud_cnt <= 0;
+            tx_bit_idx  <= 0;
+            tx_shift    <= TX_CMD;
+            tx_busy     <= 1'b0;
+        end else begin
+            case (tx_state)
+                0: begin
+                    // Wait for KEY3 press or idle
+                    if (key3_press && !tx_busy) begin
+                        tx_shift   <= TX_CMD;
+                        tx_state   <= 1;
+                        tx_baud_cnt <= 0;
+                        tx_bit_idx <= 0;
+                        tx_busy    <= 1'b1;
+                    end
+                end
+                1: begin
+                    // Start bit (low)
+                    if (tx_baud_cnt == BAUD_DIV) begin
+                        tx_baud_cnt <= 0;
+                        tx_state    <= 2;
+                    end else begin
+                        tx_baud_cnt <= tx_baud_cnt + 9'd1;
+                    end
+                end
+                2: begin
+                    // Data bits (LSB first)
+                    if (tx_baud_cnt == BAUD_DIV) begin
+                        tx_baud_cnt <= 0;
+                        tx_shift    <= {1'b0, tx_shift[7:1]};
+                        if (tx_bit_idx == 4'd7) begin
+                            tx_state <= 3;
+                        end else begin
+                            tx_bit_idx <= tx_bit_idx + 4'd1;
+                        end
+                    end else begin
+                        tx_baud_cnt <= tx_baud_cnt + 9'd1;
+                    end
+                end
+                3: begin
+                    // Stop bit (high)
+                    if (tx_baud_cnt == BAUD_DIV) begin
+                        tx_baud_cnt <= 0;
+                        tx_state    <= 0;
+                        tx_busy     <= 1'b0;
+                    end else begin
+                        tx_baud_cnt <= tx_baud_cnt + 9'd1;
+                    end
+                end
+            endcase
+        end
+    end
+
+    // TX output: idle high, start low, data LSB-first, stop high
+    reg tx_out;
+    always @(*) begin
+        case (tx_state)
+            0:      tx_out = 1'b1;     // idle
+            1:      tx_out = 1'b0;     // start bit
+            2:      tx_out = tx_shift[0];  // LSB first
+            3:      tx_out = 1'b1;     // stop bit
+            default: tx_out = 1'b1;
+        endcase
+    end
+    assign uart_tx = tx_out;
 
 endmodule

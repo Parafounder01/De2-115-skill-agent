@@ -10,6 +10,9 @@
     2. SERIAL (requires -Serial): Sends current time over RS-232
        at 115200 baud via COM port (requires DB9 cable or USB-UART adapter).
 
+    Companion script: .\listen-key.ps1 -ComPort <port>
+      Listens for 0xBB from FPGA KEY3 press → simulates Windows key on PC.
+
 .PARAMETER Serial
     Use RS-232 serial transmission instead of compile/program.
 
@@ -26,6 +29,7 @@
     .\send-time.ps1                       # Compile + program current time
     .\send-time.ps1 -Loop                 # Update every minute
     .\send-time.ps1 -Serial -ComPort COM3 # Send via serial
+    .\listen-key.ps1 -ComPort COM3        # Listen for KEY3 events (separate terminal)
 #>
 param(
     [switch]$Serial,

@@ -1,4 +1,4 @@
-# Quartus Settings File — DE2-115 Serial Clock (8-HEX 12h HH:MM:SS AM/PM)
+# Quartus Settings File — DE2-115 Serial Clock (8-HEX 12h HH:MM:SS AM/PM + KEY3→Win key)
 set_global_assignment -name FAMILY "Cyclone IV E"
 set_global_assignment -name DEVICE EP4CE115F29C7
 set_global_assignment -name TOP_LEVEL_ENTITY serial_clock
@@ -9,8 +9,12 @@ set_global_assignment -name SOURCE_FILE serial_clock.v
 set_location_assignment -to clk     PIN_Y2    # CLOCK_50 (50 MHz)
 set_location_assignment -to rst_n   PIN_M23   # KEY[0] (active-low)
 
+# ── KEY3 (Windows key trigger) ────────────────────────────
+set_location_assignment -to key3    PIN_R24   # KEY[3] (active-low)
+
 # ── UART ───────────────────────────────────────────────────
 set_location_assignment -to uart_rx PIN_G12   # RS-232 RXD
+set_location_assignment -to uart_tx PIN_G14   # RS-232 TXD
 
 # ── HEX7 (hour12 tens) ────────────────────────────────────
 set_location_assignment -to hex7[0] PIN_AD17
