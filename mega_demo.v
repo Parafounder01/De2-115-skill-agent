@@ -89,6 +89,16 @@ module mega_demo (
 
     reg [3:0] hr1, hr0, min1, min0, sec1, sec0;
 
+    // Load compile-time time at power-up
+    initial begin
+        hr1 = `INIT_HOUR   / 4'd10;
+        hr0 = `INIT_HOUR   % 4'd10;
+        min1 = `INIT_MINUTE / 4'd10;
+        min0 = `INIT_MINUTE % 4'd10;
+        sec1 = `INIT_SECOND / 4'd10;
+        sec0 = `INIT_SECOND % 4'd10;
+    end
+
     wire carry_sec0 = tick_1s && (sec0 == 4'd9);
     wire carry_sec1 = carry_sec0 && (sec1 == 4'd5);
     wire carry_min0 = carry_sec1 && (min0 == 4'd9);
