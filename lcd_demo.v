@@ -20,7 +20,11 @@ module lcd_demo (
     output       lcd_blon,  // backlight on
 
     // Dancing LEDs
-    output [17:0] ledr
+    output [17:0] ledr,
+
+    // HEX clock display (24h HH:MM:SS)
+    output [6:0] hex7, hex6, hex5, hex4,
+                 hex3, hex2, hex1, hex0
 );
 
     assign lcd_on  = 1'b1;
@@ -167,6 +171,52 @@ module lcd_demo (
             end
         end
     end
+
+    // ============================================================
+    //  24h HH:MM:SS Clock on HEX7-HEX0
+    // ============================================================
+    reg [1:0]  sec_tick;
+    reg [5:0]  sec;
+    reg [5:0]  min;
+    reg [4:0]  hour;
+
+    // 1-second tick from 100ms tick (10 counts)
+    always @(posedge clk) begin
+        if (tick_100ms) begin
+            if (sec_tick == 2'd9) begin sec_tick <= 0;
+                if (sec == 6'd59) begin sec <= 0;
+                    if (min == 6'd59) begin min <= 0;
+                        if (hour == 5'd23) hour <= 0;
+                        else hour <= hour + 1;
+                    end else min <= min + 1;
+                end else sec <= sec + 1;
+            end else sec_tick <= sec_tick + 1;
+        end
+    end
+
+    // 7-segment decoder
+    function [6:0] seg7(input [3:0] v);
+        case (v)
+            4'd0: seg7 = 7'b1000000; 4'd1: seg7 = 7'b1111001;
+            4'd2: seg7 = 7'b0100100; 4'd3: seg7 = 7'b0110000;
+            4'd4: seg7 = 7'b0011001; 4'd5: seg7 = 7'b0010010;
+            4'd6: seg7 = 7'b0000010; 4'd7: seg7 = 7'b1111000;
+            4'd8: seg7 = 7'b0000000; 4'd9: seg7 = 7'b0010000;
+            default: seg7 = 7'b1111111;
+        endcase
+    endfunction
+
+    // Colon flash on HEX6 (second dot) and HEX4 (minute dot)
+    wire colon_on = sec[0];  // blink every second
+
+    assign hex7 = seg7(hour / 10);
+    assign hex6 = seg7(hour % 10) & {colon_on ? 7'b0111111 : 7'b1111111};
+    assign hex5 = seg7(min  / 10);
+    assign hex4 = seg7(min  % 10) & 7'b0111111;  // always on
+    assign hex3 = seg7(sec  / 10);
+    assign hex2 = seg7(sec  % 10);
+    assign hex1 = 7'b1111111;  // blank
+    assign hex0 = 7'b1111111;  // blank
 
     // ============================================================
     //  Dancing LED — bounces a single lit LED across LEDR[17:0]
