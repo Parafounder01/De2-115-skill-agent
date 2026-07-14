@@ -1,0 +1,58 @@
+{
+  "name": "de2-115-skill-agent",
+  "version": "1.1.0",
+  "description": "AI skill pack for Terasic DE2-115 FPGA board (Cyclone IV EP4CE115F29C7) — CLI, MCP server, and agent skill files",
+  "keywords": [
+    "de2-115",
+    "terasic",
+    "fpga",
+    "cyclone-iv",
+    "quartus",
+    "ai-skill",
+    "mythos",
+    "opencode",
+    "claude-desktop",
+    "mcp-server"
+  ],
+  "homepage": "https://github.com/Parafounder01/De2-115-skill-agent",
+  "bugs": "https://github.com/Parafounder01/De2-115-skill-agent/issues",
+  "license": "MIT",
+  "author": "Parafounder01",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Parafounder01/De2-115-skill-agent.git"
+  },
+  "type": "module",
+  "main": "SKILL.md",
+  "bin": {
+    "de2-115": "./bin/de2-115.mjs"
+  },
+  "files": [
+    "SKILL.md",
+    "QUARTUS_CLI.md",
+    "bin/",
+    "mcp-server/",
+    "agent-config/",
+    "scripts/",
+    "build_and_program.bat",
+    "setenv.bat",
+    "dancing_led.v",
+    "blink_led.qsf",
+    "DE2_115_User_manual.pdf"
+  ],
+  "scripts": {
+    "postinstall": "node scripts/install-skill.mjs",
+    "postuninstall": "node scripts/uninstall-skill.mjs",
+    "mcp": "node mcp-server/de2-115-mcp.mjs",
+    "build": "node bin/de2-115.mjs build",
+    "program": "node bin/de2-115.mjs program",
+    "check-cable": "node bin/de2-115.mjs check"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "os": ["win32"],
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0"
+  }
+}

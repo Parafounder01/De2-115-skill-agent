@@ -1,0 +1,27 @@
+{
+  "name": "de2-115-skill-agent",
+  "version": "1.1.0",
+  "description": "DE2-115 FPGA board skill for opencode — pin reference, CLI build, MCP server",
+  "type": "skill",
+  "files": ["SKILL.md", "QUARTUS_CLI.md", "bin/de2-115.mjs"],
+  "mcpServers": {
+    "de2-115": {
+      "command": "node",
+      "args": ["mcp-server/de2-115-mcp.mjs"],
+      "env": {},
+      "disabled": false,
+      "autoApprove": [
+        "list_cables",
+        "read_pin_status"
+      ]
+    }
+  },
+  "triggers": [
+    "de2-115",
+    "de2 115",
+    "fpga",
+    "cyclone iv",
+    "terasic",
+    "quartus"
+  ]
+}

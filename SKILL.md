@@ -266,6 +266,10 @@ All HEX segments are **active-low** — set the bit to 0 to light the segment.
 ---
 
 > **Full CLI command reference:** [`QUARTUS_CLI.md`](./QUARTUS_CLI.md) — covers all 20+ Quartus II 10.0 commands, JTAG utilities, Nios II tools, file format conversions, error troubleshooting, and script templates.
+>
+> **npm package:** `de2-115-skill-agent` — install via `npm install` for CLI tool (`de2-115` command), MCP server, and automatic AI skill registration.
+>
+> **MCP server:** `mcp-server/de2-115-mcp.mjs` — lets AI agents build, program, and query the DE2-115 via JSON-RPC 2.0 over stdio.
 
 ## 3. DE2-115 CLI Workflow
 

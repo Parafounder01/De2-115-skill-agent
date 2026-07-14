@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "de2-115": {
+      "command": "node",
+      "args": [
+        "C:\\Users\\Admin\\Documents\\Test\\De2-115-skill-agent\\mcp-server\\de2-115-mcp.mjs"
+      ],
+      "env": {
+        "DE2_115_ROOT": "C:\\Users\\Admin\\Documents\\Test\\De2-115-skill-agent"
+      }
+    }
+  }
+}
