@@ -8,6 +8,9 @@ set_global_assignment -name SOURCE_FILE mega_demo.v
 # ── Clock
 set_location_assignment -to clk     PIN_Y2
 
+# ── UART (serial time receive)
+set_location_assignment -to uart_rx PIN_G12
+
 # ── HEX7 (hour12 tens)
 set_location_assignment -to hex7[0] PIN_AD17
 set_location_assignment -to hex7[1] PIN_AE17

@@ -14,6 +14,7 @@
 
 module mega_demo (
     input  clk,           // 50 MHz (PIN_Y2)
+    input  uart_rx,       // UART RXD (PIN_G12) — receive time: 0xAA HH MM SS
 
     // ── HEX display ──
     output [6:0] hex7, hex6, hex5, hex4,
@@ -94,17 +95,103 @@ module mega_demo (
     wire carry_min1 = carry_min0 && (min1 == 4'd5);
     wire is_23h59m  = (hr1 == 4'd2) && (hr0 == 4'd3);
 
+    // Serial time update wires (from UART frame parser below)
+    wire        time_update;
+    wire [7:0]  frm_hour, frm_min, frm_sec;
+
     always @(posedge clk) begin
-        if (carry_sec0) sec1 <= (sec1 == 4'd5) ? 4'd0 : sec1 + 4'd1;
-        if (carry_sec1) min0 <= (min0 == 4'd9) ? 4'd0 : min0 + 4'd1;
-        if (carry_min0) min1 <= (min1 == 4'd5) ? 4'd0 : min1 + 4'd1;
-        if (carry_min1) begin
-            if (is_23h59m) {hr1, hr0} <= {4'd0, 4'd0};
-            else if (hr0 == 9) {hr1, hr0} <= {hr1 + 4'd1, 4'd0};
-            else hr0 <= hr0 + 4'd1;
+        if (time_update) begin
+            hr1 <= frm_hour / 4'd10; hr0 <= frm_hour % 4'd10;
+            min1 <= frm_min  / 4'd10; min0 <= frm_min  % 4'd10;
+            sec1 <= frm_sec  / 4'd10; sec0 <= frm_sec  % 4'd10;
+        end else begin
+            if (carry_sec0) sec1 <= (sec1 == 4'd5) ? 4'd0 : sec1 + 4'd1;
+            if (carry_sec1) min0 <= (min0 == 4'd9) ? 4'd0 : min0 + 4'd1;
+            if (carry_min0) min1 <= (min1 == 4'd5) ? 4'd0 : min1 + 4'd1;
+            if (carry_min1) begin
+                if (is_23h59m) {hr1, hr0} <= {4'd0, 4'd0};
+                else if (hr0 == 9) {hr1, hr0} <= {hr1 + 4'd1, 4'd0};
+                else hr0 <= hr0 + 4'd1;
+            end
+            if (tick_1s) sec0 <= (sec0 == 4'd9) ? 4'd0 : sec0 + 4'd1;
         end
-        if (tick_1s) sec0 <= (sec0 == 4'd9) ? 4'd0 : sec0 + 4'd1;
     end
+
+    // ============================================================
+    //  2b. UART receiver — 115200 baud, 8N1
+    //      Baud divider: 50,000,000 / 115,200 ≈ 434
+    // ============================================================
+    localparam BAUD_DIV   = 9'd434;
+    localparam BAUD_HALF  = 9'd217;
+
+    reg        rx_sync, rx_prev;
+    reg [1:0]  rx_state;
+    reg [8:0]  rx_baud_cnt;
+    reg [2:0]  rx_bit_idx;
+    reg [7:0]  rx_shift;
+    reg        rx_byte_valid;
+    reg [7:0]  rx_byte;
+
+    always @(posedge clk) begin
+        rx_byte_valid <= 1'b0;
+        rx_prev <= rx_sync;
+        rx_sync <= uart_rx;
+
+        case (rx_state)
+            0: begin
+                if (rx_prev && !rx_sync) begin
+                    rx_state    <= 1;
+                    rx_baud_cnt <= 0;
+                    rx_bit_idx  <= 0;
+                end
+            end
+            1: begin
+                if (rx_baud_cnt == BAUD_HALF) begin
+                    if (!rx_sync) begin rx_state <= 2; rx_baud_cnt <= 0; end
+                    else rx_state <= 0;
+                end else rx_baud_cnt <= rx_baud_cnt + 9'd1;
+            end
+            2: begin
+                if (rx_baud_cnt == BAUD_DIV) begin
+                    rx_shift[rx_bit_idx] <= rx_sync;
+                    rx_baud_cnt <= 0;
+                    if (rx_bit_idx == 3'd7) rx_state <= 3;
+                    else rx_bit_idx <= rx_bit_idx + 3'd1;
+                end else rx_baud_cnt <= rx_baud_cnt + 9'd1;
+            end
+            3: begin
+                if (rx_baud_cnt == BAUD_DIV) begin
+                    rx_state <= 0; rx_baud_cnt <= 0;
+                    if (rx_sync) begin rx_byte <= rx_shift; rx_byte_valid <= 1'b1; end
+                end else rx_baud_cnt <= rx_baud_cnt + 9'd1;
+            end
+        endcase
+    end
+
+    // ── Time frame parser: 0xAA HH MM SS ──
+    reg [1:0]  frm_state;
+    reg [7:0]  frm_hour_r, frm_min_r, frm_sec_r;
+    reg        time_update_r;
+
+    always @(posedge clk) begin
+        time_update_r <= 1'b0;
+        if (rx_byte_valid) begin
+            case (frm_state)
+                0: begin if (rx_byte == 8'hAA) frm_state <= 1; end
+                1: begin if (rx_byte <= 8'd23) begin frm_hour_r <= rx_byte; frm_state <= 2; end
+                      else frm_state <= 0; end
+                2: begin if (rx_byte <= 8'd59) begin frm_min_r  <= rx_byte; frm_state <= 3; end
+                      else frm_state <= 0; end
+                3: begin if (rx_byte <= 8'd59) begin frm_sec_r  <= rx_byte; time_update_r <= 1'b1; end
+                      frm_state <= 0; end
+            endcase
+        end
+    end
+
+    assign frm_hour = frm_hour_r;
+    assign frm_min  = frm_min_r;
+    assign frm_sec  = frm_sec_r;
+    assign time_update = time_update_r;
 
     // ============================================================
     //  3. HEX display: 12-hour clock with AM/PM
