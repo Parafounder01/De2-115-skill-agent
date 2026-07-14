@@ -32,13 +32,15 @@ module lcd_demo (
     assign lcd_rw  = 1'b0;   // always write
 
     // ============================================================
-    //  100 ms tick generator
+    //  100 ms tick generator (resets at 4,999,999 for true 100ms)
     // ============================================================
     reg [22:0] tick_cnt;
-    wire tick_100ms = (tick_cnt == 23'd4_999_999);  // 100ms @ 50 MHz
+    wire tick_100ms;
     always @(posedge clk) begin
-        tick_cnt <= tick_cnt + 23'd1;
+        if (tick_cnt == 23'd4_999_999) begin tick_cnt <= 23'd0; end
+        else tick_cnt <= tick_cnt + 23'd1;
     end
+    assign tick_100ms = (tick_cnt == 23'd4_999_999);
 
     // ============================================================
     //  Character ROM: 32 bytes (two 16-char lines)
@@ -175,7 +177,7 @@ module lcd_demo (
     // ============================================================
     //  24h HH:MM:SS Clock on HEX7-HEX0
     // ============================================================
-    reg [1:0]  sec_tick;
+    reg [3:0]  sec_tick;
     reg [5:0]  sec;
     reg [5:0]  min;
     reg [4:0]  hour;
