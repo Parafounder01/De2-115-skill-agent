@@ -1,0 +1,29 @@
+{
+  "$schema": "https://raw.githubusercontent.com/Parafounder01/mythos-router/main/schemas/skill.schema.json",
+  "skillId": "de2-115-skill-agent",
+  "version": "1.1.0",
+  "name": "DE2-115 Skill Agent",
+  "description": "Terasic DE2-115 FPGA board (Cyclone IV EP4CE115F29C7) — complete pin reference, CLI build/program workflow, MCP server for AI control",
+  "type": "hardware",
+  "domains": ["fpga", "quartus", "verilog", "hardware"],
+  "files": ["SKILL.md", "QUARTUS_CLI.md"],
+  "mcpServer": {
+    "command": "node",
+    "args": ["mcp-server/de2-115-mcp.mjs"],
+    "env": {}
+  },
+  "triggers": [
+    "de2-115",
+    "de2 115",
+    "fpga",
+    "cyclone iv",
+    "ep4ce115",
+    "terasic",
+    "quartus"
+  ],
+  "entryPoints": {
+    "skill": "SKILL.md",
+    "cli": "QUARTUS_CLI.md",
+    "mcp": "mcp-server/de2-115-mcp.mjs"
+  }
+}

@@ -493,14 +493,146 @@ flowchart TB
 
 ---
 
-## <img valign='middle' alt='swatch' src='https://readme-swatches.vercel.app/00A651?style=square&size=18'/> Loading as an AI Agent Skill
+## <img valign='middle' alt='swatch' src='https://readme-swatches.vercel.app/00A651?style=square&size=18'/> How to Call the Skill
 
-Tell your AI agent:
+### <img valign='middle' alt='' src='https://readme-swatches.vercel.app/0078C0?style=square&size=14'/> Via trigger keyword `/de2-115`
 
-> Load skill: de2-115-skill-agent  
-> Reference: SKILL.md for pin tables + QUARTUS_CLI.md for commands  
+Once installed, any AI agent with the skill loaded can activate it by typing:
+
+```
+/de2-115 build my_project
+/de2-115 program blink_led
+/de2-115 check cable
+/de2-115 scaffold new_design
+/de2-115 pinout ledr
+```
+
+The AI will recognize the `/de2-115` prefix and route the request through the skill's MCP server and pin reference.
+
+### <img valign='middle' alt='' src='https://readme-swatches.vercel.app/00A651?style=square&size=14'/> Trigger keywords (auto-detect)
+
+The skill auto-activates when the AI detects any of these in your request:
+
+| Keyword | Triggers |
+|---------|----------|
+| `de2-115`, `de2 115` | Any mention of the board |
+| `fpga`, `cyclone iv`, `ep4ce115` | FPGA family reference |
+| `terasic` | Board manufacturer |
+| `quartus`, `quartus_pgm` | Toolchain reference |
+| `usb-blaster`, `jtag` | Programming interface |
+| `ledr`, `ledg`, `ledr[17:0]` | On-board LED reference |
+
+### <img valign='middle' alt='' src='https://readme-swatches.vercel.app/FF8C00?style=square&size=14'/> Manual skill load
+
+Tell your agent at the start of a session:
+
+> **Load skill: de2-115-skill-agent**  
+> Reference: `SKILL.md` for pin tables + `QUARTUS_CLI.md` for commands  
 > Board: DE2-115 (Cyclone IV EP4CE115F29C7), 50 MHz, 18 red LEDs, 9 green LEDs  
-> Workflow: map → fit → asm → sta → pgm via Quartus II 10.0 CLI
+> Workflow: `quartus_map` → `quartus_fit` → `quartus_asm` → `quartus_sta` → `quartus_pgm`
+
+---
+
+## <img valign='middle' alt='swatch' src='https://readme-swatches.vercel.app/7B2CBF?style=square&size=18'/> Configuration Reference
+
+### <img valign='middle' alt='' src='https://readme-swatches.vercel.app/CB3837?style=square&size=14'/> Opencode (`~/.config/opencode/opencode.json`)
+
+```json
+{
+  "model": "anthropic/claude-sonnet-4-20250514",
+  "default_agent": "claudeMythos",
+  "instructions": [
+    "AGENTS.md"
+  ]
+}
+```
+
+Skill auto-loads from `~/.config/opencode/skills/de2-115/`.  
+To reference the pin tables directly, add to `"instructions"`:
+
+```json
+"instructions": [
+  "C:\\Users\\Admin\\.config\\opencode\\skills\\de2-115\\SKILL.md"
+]
+```
+
+### <img valign='middle' alt='' src='https://readme-swatches.vercel.app/0078C0?style=square&size=14'/> Mythos Router (`~/.mythos-router/`)
+
+Skill manifest at `~/.mythos-router/skills/de2-115/mythos-skill.json`:
+
+```json
+{
+  "skillId": "de2-115-skill-agent",
+  "triggers": ["de2-115", "fpga", "cyclone iv", "ep4ce115", "terasic", "quartus"],
+  "mcpServer": {
+    "command": "node",
+    "args": ["mcp-server/de2-115-mcp.mjs"]
+  }
+}
+```
+
+Add `"de2-115-skill-agent"` to the `activeSkills` array in your `mythos.config.json`:
+
+```json
+{
+  "activeSkills": ["de2-115-skill-agent"]
+}
+```
+
+### <img valign='middle' alt='' src='https://readme-swatches.vercel.app/00A651?style=square&size=14'/> Claude Desktop
+
+MCP server config merged into `claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "de2-115": {
+      "command": "node",
+      "args": ["C:\\path\\to\\De2-115-skill-agent\\mcp-server\\de2-115-mcp.mjs"]
+    }
+  }
+}
+```
+
+Restart Claude Desktop after adding. The DE2-115 tools will appear in the chat interface.
+
+### <img valign='middle' alt='' src='https://readme-swatches.vercel.app/9D4EDD?style=square&size=14'/> Direct agent prompt
+
+Any AI agent can load the skill by reading the markdown file directly:
+
+```
+Read and internalize C:\Users\Admin\.config\opencode\skills\de2-115\SKILL.md
+You are now a DE2-115 FPGA design assistant. Use the pin tables and Quartus CLI workflow.
+```
+
+---
+
+## <img valign='middle' alt='swatch' src='https://readme-swatches.vercel.app/FFD700?style=square&size=18'/> Backup: Installed Skills
+
+The skill is deployed to these locations. Backup copies are included in this repo:
+
+| Platform | Install Path | Manifest |
+|----------|-------------|----------|
+| Opencode | `~/.config/opencode/skills/de2-115/` | `skills-backup/opencode/` |
+| Mythos Router | `~/.mythos-router/skills/de2-115/` | `skills-backup/mythos/` |
+
+To restore from backup:
+
+```bash
+# Opencode
+xcopy /E /I skills-backup\opencode %USERPROFILE%\.config\opencode\skills\de2-115
+
+# Mythos Router
+xcopy /E /I skills-backup\mythos %USERPROFILE%\.mythos-router\skills\de2-115
+```
+
+Or re-run the installer:
+
+```bash
+npm install
+# or
+node scripts\install-skill.mjs
+```
 
 ---
 

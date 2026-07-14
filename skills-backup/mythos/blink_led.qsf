@@ -1,0 +1,30 @@
+# Quartus Settings File — DE2-115 (Cyclone IV EP4CE115F29C7)
+set_global_assignment -name FAMILY "Cyclone IV E"
+set_global_assignment -name DEVICE EP4CE115F29C7
+set_global_assignment -name TOP_LEVEL_ENTITY dancing_led
+set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
+set_global_assignment -name SOURCE_FILE dancing_led.v
+
+# Pin assignments (DE2-115) — verify against your board manual
+set_location_assignment -to clk PIN_Y2      # CLOCK_50 (50 MHz)
+set_location_assignment -to rst PIN_AB28    # SW[0] (active-high reset)
+
+# LEDR[17:0] — official DE2-115 red-LED bank (from Terasic pin CSV)
+set_location_assignment -to ledr[0]  PIN_G19
+set_location_assignment -to ledr[1]  PIN_F19
+set_location_assignment -to ledr[2]  PIN_E19
+set_location_assignment -to ledr[3]  PIN_F21
+set_location_assignment -to ledr[4]  PIN_F18
+set_location_assignment -to ledr[5]  PIN_E18
+set_location_assignment -to ledr[6]  PIN_J19
+set_location_assignment -to ledr[7]  PIN_H19
+set_location_assignment -to ledr[8]  PIN_J17
+set_location_assignment -to ledr[9]  PIN_G17
+set_location_assignment -to ledr[10] PIN_J15
+set_location_assignment -to ledr[11] PIN_H16
+set_location_assignment -to ledr[12] PIN_J16
+set_location_assignment -to ledr[13] PIN_H17
+set_location_assignment -to ledr[14] PIN_F15
+set_location_assignment -to ledr[15] PIN_G15
+set_location_assignment -to ledr[16] PIN_G16
+set_location_assignment -to ledr[17] PIN_H15
