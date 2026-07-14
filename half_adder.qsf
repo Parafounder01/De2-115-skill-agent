@@ -5,6 +5,9 @@ set_global_assignment -name TOP_LEVEL_ENTITY half_adder
 set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
 set_global_assignment -name SOURCE_FILE half_adder.v
 
+# ── Clock ──────────────────────────────────────────────────
+set_location_assignment -to clk  PIN_Y2    # CLOCK_50 (50 MHz)
+
 # ── Slide switches ──────────────────────────────────────────
 set_location_assignment -to sw17 PIN_V23
 set_location_assignment -to sw16 PIN_V24
@@ -31,6 +34,7 @@ set_location_assignment -to ledr[17] PIN_H15
 
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to sw17
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to sw16
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to clk
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ledr[0]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ledr[1]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ledr[2]
