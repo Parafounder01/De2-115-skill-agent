@@ -34,6 +34,7 @@ module serial_clock (
     input  uart_rx,      // UART RXD (PIN_G12)
     input  key3,         // KEY3 (active-low, PIN_R24) → sends Win key via UART TX
     output uart_tx,      // UART TXD (PIN_G14)
+    output reg led_key3, // LEDG[0] (PIN_E21) — blinks 250ms on KEY3 press
     output [6:0] hex7,   // hour12 tens  (blank/1)
     output [6:0] hex6,   // hour12 ones  (0-9)
     output [6:0] hex5,   // minutes tens (0-5)
@@ -293,17 +294,17 @@ module serial_clock (
     // ============================================================
     localparam DB_CNT_MAX = 20'd500_000;  // 10 ms @ 50 MHz
     reg [19:0] db_cnt;
-    reg        db_key3, key3_sync, key3_prev;
+    reg        db_key3, db_key3_prev, key3_sync;
 
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
-            db_cnt    <= 0;
-            db_key3   <= 1'b1;
-            key3_sync <= 1'b1;
-            key3_prev <= 1'b1;
+            db_cnt      <= 0;
+            db_key3     <= 1'b1;
+            db_key3_prev <= 1'b1;
+            key3_sync   <= 1'b1;
         end else begin
-            key3_prev <= key3_sync;
-            key3_sync <= key3;
+            db_key3_prev <= db_key3;
+            key3_sync    <= key3;
 
             // Debounce: wait for stable low for DB_CNT_MAX cycles
             if (key3_sync != db_key3) begin
@@ -319,8 +320,8 @@ module serial_clock (
         end
     end
 
-    // Rising edge on the debounced key (active-low → low means pressed)
-    wire key3_press = !db_key3 && key3_prev;  // actually: was high, now low = press
+    // Falling edge on db_key3 (active-low: 1→0 = press)
+    wire key3_press = db_key3_prev && !db_key3;
 
     // ============================================================
     //  9. UART transmitter — 115200 baud, 8N1
@@ -402,5 +403,30 @@ module serial_clock (
         endcase
     end
     assign uart_tx = tx_out;
+
+    // ============================================================
+    //  10. KEY3 LED one-shot — blinks LEDG[0] for ~250ms on press
+    // ============================================================
+    localparam LED_MS250 = 24'd12_500_000;   // 250 ms @ 50 MHz
+    reg [23:0] led_cnt;
+
+    always @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            led_key3 <= 1'b0;
+            led_cnt  <= 0;
+        end else begin
+            if (key3_press) begin
+                led_key3 <= 1'b1;
+                led_cnt  <= 0;
+            end else if (led_key3) begin
+                if (led_cnt == LED_MS250) begin
+                    led_key3 <= 1'b0;
+                    led_cnt  <= 0;
+                end else begin
+                    led_cnt <= led_cnt + 24'd1;
+                end
+            end
+        end
+    end
 
 endmodule
