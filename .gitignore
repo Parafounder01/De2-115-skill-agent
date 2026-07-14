@@ -10,3 +10,5 @@ output_files/*.htm
 # MCP/Node
 node_modules/
 package-lock.json
+time_init.v
+output_files/*.sof
