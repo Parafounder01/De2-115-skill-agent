@@ -259,16 +259,23 @@ module mega_demo (
     assign lcd_data = lcd_buf;
     assign lcd_rs   = lcd_rs_buf;
 
-    // EN strobe: single pulse generator
+    // EN strobe: standalone pulse generator
+    //  When start_en is strobed, generates a 10-cycle high / 10-cycle low pulse on lcd_en.
+    reg       start_en;
+    reg       en_busy;
     reg [3:0] en_cnt;
     reg       en_phase;
-    reg       en_busy;
+    reg       lcd_en_r;
+    reg       start_en_ff;
+
+    assign lcd_en = lcd_en_r;
 
     always @(posedge clk) begin
-        if (lcd_state == IDLE) begin
+        start_en_ff <= start_en;
+        if (!en_busy && start_en && !start_en_ff) begin
+            en_busy  <= 1'b1;
             en_cnt   <= 0;
-            en_phase <= 0;
-            en_busy  <= 0;
+            en_phase <= 1'b0;
             lcd_en_r <= 1'b0;
         end else if (en_busy) begin
             if (!en_phase) begin
@@ -308,36 +315,36 @@ module mega_demo (
             // ── Init commands ──
             CMD_FUNC: begin
                 lcd_buf <= 8'h38; lcd_rs_buf <= 0;
-                if (!en_busy) begin en_busy <= 1; end
-                else if (wait_cnt == 16'd200) begin wait_cnt <= 0; lcd_state <= CMD_OFF; end
+                if (!en_busy && !start_en) begin start_en <= 1; end
+                else if (wait_cnt == 16'd200) begin start_en <= 0; wait_cnt <= 0; lcd_state <= CMD_OFF; end
                 else if (tick_10us) wait_cnt <= wait_cnt + 16'd1;
             end
 
             CMD_OFF: begin
                 lcd_buf <= 8'h08; lcd_rs_buf <= 0;
-                if (!en_busy) begin en_busy <= 1; end
-                else if (wait_cnt == 16'd100) begin wait_cnt <= 0; lcd_state <= CMD_CLR; end
+                if (!en_busy && !start_en) begin start_en <= 1; end
+                else if (wait_cnt == 16'd100) begin start_en <= 0; wait_cnt <= 0; lcd_state <= CMD_CLR; end
                 else if (tick_10us) wait_cnt <= wait_cnt + 16'd1;
             end
 
             CMD_CLR: begin
                 lcd_buf <= 8'h01; lcd_rs_buf <= 0;
-                if (!en_busy) begin en_busy <= 1; end
-                else if (wait_cnt == 16'd2000) begin wait_cnt <= 0; lcd_state <= CMD_ENTRY; end
+                if (!en_busy && !start_en) begin start_en <= 1; end
+                else if (wait_cnt == 16'd2000) begin start_en <= 0; wait_cnt <= 0; lcd_state <= CMD_ENTRY; end
                 else if (tick_10us) wait_cnt <= wait_cnt + 16'd1;
             end
 
             CMD_ENTRY: begin
                 lcd_buf <= 8'h06; lcd_rs_buf <= 0;
-                if (!en_busy) begin en_busy <= 1; end
-                else if (wait_cnt == 16'd100) begin wait_cnt <= 0; lcd_state <= CMD_ON; end
+                if (!en_busy && !start_en) begin start_en <= 1; end
+                else if (wait_cnt == 16'd100) begin start_en <= 0; wait_cnt <= 0; lcd_state <= CMD_ON; end
                 else if (tick_10us) wait_cnt <= wait_cnt + 16'd1;
             end
 
             CMD_ON: begin
                 lcd_buf <= 8'h0C; lcd_rs_buf <= 0;
-                if (!en_busy) begin en_busy <= 1; end
-                else if (wait_cnt == 16'd100) begin wait_cnt <= 0; lcd_state <= CGRAM_ADDR; cg_idx <= 0; end
+                if (!en_busy && !start_en) begin start_en <= 1; end
+                else if (wait_cnt == 16'd100) begin start_en <= 0; wait_cnt <= 0; lcd_state <= CGRAM_ADDR; cg_idx <= 0; end
                 else if (tick_10us) wait_cnt <= wait_cnt + 16'd1;
             end
 
@@ -345,16 +352,16 @@ module mega_demo (
             CGRAM_ADDR: begin
                 lcd_buf <= {2'b01, cg_idx[4:0], 1'b0};  // 0x40 + cg_idx
                 lcd_rs_buf <= 0;
-                if (!en_busy) begin en_busy <= 1; end
-                else if (wait_cnt == 16'd100) begin wait_cnt <= 0; lcd_state <= CGRAM_WR; end
+                if (!en_busy && !start_en) begin start_en <= 1; end
+                else if (wait_cnt == 16'd100) begin start_en <= 0; wait_cnt <= 0; lcd_state <= CGRAM_WR; end
                 else if (tick_10us) wait_cnt <= wait_cnt + 16'd1;
             end
 
             CGRAM_WR: begin
                 lcd_buf <= cgram[cg_idx];
                 lcd_rs_buf <= 1;
-                if (!en_busy) begin en_busy <= 1; end
-                else if (wait_cnt == 16'd100) begin wait_cnt <= 0; lcd_state <= CGRAM_NEXT; end
+                if (!en_busy && !start_en) begin start_en <= 1; end
+                else if (wait_cnt == 16'd100) begin start_en <= 0; wait_cnt <= 0; lcd_state <= CGRAM_NEXT; end
                 else if (tick_10us) wait_cnt <= wait_cnt + 16'd1;
             end
 
@@ -467,8 +474,8 @@ module mega_demo (
                 if (wr_idx < 16) lcd_buf <= 8'h80 + wr_idx[3:0];       // Line 1 addr
                 else lcd_buf <= 8'hC0 + (wr_idx - 5'd16);              // Line 2 addr
                 lcd_rs_buf <= 0;
-                if (!en_busy) begin en_busy <= 1; end
-                else if (wait_cnt == 16'd100) begin wait_cnt <= 0; lcd_state <= WR_CHAR; end
+                if (!en_busy && !start_en) begin start_en <= 1; end
+                else if (wait_cnt == 16'd100) begin start_en <= 0; wait_cnt <= 0; lcd_state <= WR_CHAR; end
                 else if (tick_10us) wait_cnt <= wait_cnt + 16'd1;
             end
 
@@ -476,8 +483,8 @@ module mega_demo (
                 if (wr_idx < 16) lcd_buf <= line1[wr_idx];
                 else lcd_buf <= line2[wr_idx - 5'd16];
                 lcd_rs_buf <= 1;
-                if (!en_busy) begin en_busy <= 1; end
-                else if (wait_cnt == 16'd100) begin wait_cnt <= 0; lcd_state <= NEXT_CHAR; end
+                if (!en_busy && !start_en) begin start_en <= 1; end
+                else if (wait_cnt == 16'd100) begin start_en <= 0; wait_cnt <= 0; lcd_state <= NEXT_CHAR; end
                 else if (tick_10us) wait_cnt <= wait_cnt + 16'd1;
             end
 
