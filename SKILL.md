@@ -265,6 +265,8 @@ All HEX segments are **active-low** — set the bit to 0 to light the segment.
 
 ---
 
+> **Full CLI command reference:** [`QUARTUS_CLI.md`](./QUARTUS_CLI.md) — covers all 20+ Quartus II 10.0 commands, JTAG utilities, Nios II tools, file format conversions, error troubleshooting, and script templates.
+
 ## 3. DE2-115 CLI Workflow
 
 ### 3.1 Conceptual Stack
