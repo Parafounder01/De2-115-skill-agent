@@ -5,6 +5,7 @@
 //  Counts  from 00:00 → 23:59, then wraps.
 //
 //  50 MHz clk, KEY0 = reset_n (active-low push-button)
+//  Power-on sets clock to PC system time: 15:06
 //  All 7-segment outputs: active-low, {g,f,e,d,c,b,a}
 // ============================================================
 
@@ -34,27 +35,40 @@ module timer_counter (
     reg [3:0] min0, min1;   // minutes ones, minutes tens
     reg [3:0] hr0,  hr1;    // hours ones,   hours tens
 
+    // Power-on initialization: one-shot load of current system time (15:06)
+    reg [1:0] init_cnt;
+    wire init_load = (init_cnt == 2'd1);
+    always @(posedge clk or negedge rst_n) begin
+        if (!rst_n)            init_cnt <= 2'd0;
+        else if (init_cnt < 3) init_cnt <= init_cnt + 2'd1;
+    end
+
     wire carry_min0 = t_1s && (min0 == 4'd9);           // every 10 sec
     wire carry_min1 = carry_min0 && (min1 == 4'd5);     // every 60 sec = 1 min
     wire is_23      = (hr1 == 4'd2) && (hr0 == 4'd3);   // 23:XX → wrap
 
-    // minutes ones (0→9, +1 every 60 s)
+    // minutes ones (0→9, +1 every 60 s, init to 6)
     always @(posedge clk or negedge rst_n) begin
-        if (!rst_n)          min0 <= 4'd0;
-        else if (t_1s)       min0 <= (min0 == 4'd9) ? 4'd0 : min0 + 4'd1;
+        if (!rst_n)             min0 <= 4'd0;
+        else if (init_load)     min0 <= 4'd6;
+        else if (t_1s)          min0 <= (min0 == 4'd9) ? 4'd0 : min0 + 4'd1;
     end
 
-    // minutes tens (0→5, +1 every 10 min)
+    // minutes tens (0→5, +1 every 10 min, init to 0)
     always @(posedge clk or negedge rst_n) begin
-        if (!rst_n)            min1 <= 4'd0;
-        else if (carry_min0)   min1 <= (min1 == 4'd5) ? 4'd0 : min1 + 4'd1;
+        if (!rst_n)              min1 <= 4'd0;
+        else if (init_load)      min1 <= 4'd0;
+        else if (carry_min0)     min1 <= (min1 == 4'd5) ? 4'd0 : min1 + 4'd1;
     end
 
-    // hours (00→23→00 cascade)
+    // hours (00→23→00 cascade, init to 15)
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             hr0 <= 4'd0;
             hr1 <= 4'd0;
+        end else if (init_load) begin
+            hr0 <= 4'd5;   // 15:06 → hr0=5
+            hr1 <= 4'd1;   //            hr1=1
         end else if (carry_min1) begin
             if (is_23) begin                   // 23:59 → 00:00
                 hr0 <= 4'd0;
