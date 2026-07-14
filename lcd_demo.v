@@ -17,7 +17,10 @@ module lcd_demo (
     output       lcd_rw,   // 0=write, 1=read
     output       lcd_en,   // enable strobe
     output       lcd_on,   // backlight power
-    output       lcd_blon  // backlight on
+    output       lcd_blon,  // backlight on
+
+    // Dancing LEDs
+    output [17:0] ledr
 );
 
     assign lcd_on  = 1'b1;
@@ -162,6 +165,37 @@ module lcd_demo (
                 lcd_en_r <= 1'b0;
                 strobe <= strobe + 6'd1;
             end
+        end
+    end
+
+    // ============================================================
+    //  Dancing LED — bounces a single lit LED across LEDR[17:0]
+    // ============================================================
+    reg [24:0] dance_cnt;
+    reg [17:0] ledr_r;
+    reg        dance_dir;  // 0=toward 17, 1=toward 0
+    localparam DANCE_STEP = 25'd1_500_000;  // 30ms @ 50 MHz
+
+    assign ledr = ledr_r;
+
+    initial begin
+        dance_cnt <= 25'd0;
+        ledr_r    <= 18'h0_0001;
+        dance_dir <= 1'b0;
+    end
+
+    always @(posedge clk) begin
+        if (dance_cnt >= DANCE_STEP) begin
+            dance_cnt <= 25'd0;
+            if (dance_dir == 1'b0) begin
+                if (ledr_r[17]) begin dance_dir <= 1'b1; ledr_r <= ledr_r >> 1; end
+                else ledr_r <= ledr_r << 1;
+            end else begin
+                if (ledr_r[0]) begin dance_dir <= 1'b0; ledr_r <= ledr_r << 1; end
+                else ledr_r <= ledr_r >> 1;
+            end
+        end else begin
+            dance_cnt <= dance_cnt + 25'd1;
         end
     end
 
