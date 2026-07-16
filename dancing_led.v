@@ -1,43 +1,40 @@
-// dancing_led.v — DE2-115 running-light that bounces across LEDR[17:0]
-// clk = 50 MHz (PIN_Y2), rst = active-high (PIN_AB28), ledr = 18 red LEDs
-module dancing_led(
-    input  wire       clk,
-    input  wire       rst,
-    output reg [17:0] ledr
+// ============================================================
+//  dancing_led.v — DE2-115 running light (standalone)
+//
+//  A single lit LED bounces back and forth across LEDR[17:0].
+//  Starts automatically on power-up (no reset needed).
+// ============================================================
+
+module dancing_led (
+    input  clk,             // 50 MHz (PIN_Y2)
+    output [17:0] ledr
 );
 
-    reg [24:0] counter;
-    localparam HALF_PERIOD = 25'd1_500_000;  // 30 ms step @ 50 MHz
+    reg [24:0] dance_cnt;
+    reg [17:0] ledr_r;
+    reg        dance_dir;   // 0 = toward LEDR17, 1 = toward LEDR0
+    localparam DANCE_STEP = 25'd1_500_000;  // 30 ms per step @ 50 MHz
 
-    reg dir;  // 0 = move toward LEDR17, 1 = move toward LEDR0
-    localparam TO_HIGH = 1'b0, TO_LOW = 1'b1;
+    assign ledr = ledr_r;
 
-    always @(posedge clk or posedge rst) begin
-        if (rst) begin
-            counter <= 25'd0;
-            ledr    <= 18'h0_0001;  // LEDR[0] lit
-            dir     <= TO_HIGH;
-        end else begin
-            if (counter >= HALF_PERIOD) begin
-                counter <= 25'd0;
-                if (dir == TO_HIGH) begin
-                    if (ledr[17]) begin
-                        dir  <= TO_LOW;
-                        ledr <= ledr >> 1;
-                    end else begin
-                        ledr <= ledr << 1;
-                    end
-                end else begin
-                    if (ledr[0]) begin
-                        dir  <= TO_HIGH;
-                        ledr <= ledr << 1;
-                    end else begin
-                        ledr <= ledr >> 1;
-                    end
-                end
+    initial begin
+        dance_cnt <= 25'd0;
+        ledr_r    <= 18'h0_0001;   // LEDR[0] lit at start
+        dance_dir <= 1'b0;
+    end
+
+    always @(posedge clk) begin
+        if (dance_cnt >= DANCE_STEP) begin
+            dance_cnt <= 25'd0;
+            if (dance_dir == 1'b0) begin
+                if (ledr_r[17]) begin dance_dir <= 1'b1; ledr_r <= ledr_r >> 1; end
+                else            ledr_r <= ledr_r << 1;
             end else begin
-                counter <= counter + 25'd1;
+                if (ledr_r[0])  begin dance_dir <= 1'b0; ledr_r <= ledr_r << 1; end
+                else            ledr_r <= ledr_r >> 1;
             end
+        end else begin
+            dance_cnt <= dance_cnt + 25'd1;
         end
     end
 
