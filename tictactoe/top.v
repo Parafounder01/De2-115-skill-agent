@@ -63,20 +63,22 @@ module top (
     // ============================================================
     //  Debounced inputs
     // ============================================================
-    wire k_up_lvl, k_up_fe, k_up_re;    // KEY0 = UP
+    // Physical key layout: [K0] [K1] [K2] [K3]
+    // Mapped as:          LEF  DOWN UP   RIGHT
+    wire k_lt_lvl, k_lt_fe, k_lt_re;    // KEY0 = LEFT  (leftmost)
     wire k_dn_lvl, k_dn_fe, k_dn_re;    // KEY1 = DOWN
-    wire k_lt_lvl, k_lt_fe, k_lt_re;    // KEY2 = LEFT
-    wire k_rt_lvl, k_rt_fe, k_rt_re;    // KEY3 = RIGHT
+    wire k_up_lvl, k_up_fe, k_up_re;    // KEY2 = UP
+    wire k_rt_lvl, k_rt_fe, k_rt_re;    // KEY3 = RIGHT (rightmost)
 
     wire sw_place_lvl, sw_place_re, sw_place_fe;   // SW0 = Place
     wire sw_rst_lvl,  sw_rst_re,  sw_rst_fe;       // SW1 = Restart
 
     input_debounce db_k0 (.clk(CLOCK_50), .rst_n(por_n), .raw(KEY[0]),
-        .level(k_up_lvl), .rising(k_up_re), .falling(k_up_fe));
+        .level(k_lt_lvl), .rising(k_lt_re), .falling(k_lt_fe));
     input_debounce db_k1 (.clk(CLOCK_50), .rst_n(por_n), .raw(KEY[1]),
         .level(k_dn_lvl), .rising(k_dn_re), .falling(k_dn_fe));
     input_debounce db_k2 (.clk(CLOCK_50), .rst_n(por_n), .raw(KEY[2]),
-        .level(k_lt_lvl), .rising(k_lt_re), .falling(k_lt_fe));
+        .level(k_up_lvl), .rising(k_up_re), .falling(k_up_fe));
     input_debounce db_k3 (.clk(CLOCK_50), .rst_n(por_n), .raw(KEY[3]),
         .level(k_rt_lvl), .rising(k_rt_re), .falling(k_rt_fe));
 

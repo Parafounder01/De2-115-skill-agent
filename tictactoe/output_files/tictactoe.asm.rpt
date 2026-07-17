@@ -1,5 +1,5 @@
 Assembler report for tictactoe
-Fri Jul 17 15:38:31 2026
+Fri Jul 17 15:41:51 2026
 Quartus II Version 10.0 Build 218 06/27/2010 SJ Web Edition
 
 
@@ -37,7 +37,7 @@ applicable agreement for further details.
 +---------------------------------------------------------------+
 ; Assembler Summary                                             ;
 +-----------------------+---------------------------------------+
-; Assembler Status      ; Successful - Fri Jul 17 15:38:31 2026 ;
+; Assembler Status      ; Successful - Fri Jul 17 15:41:51 2026 ;
 ; Revision Name         ; tictactoe                             ;
 ; Top-level Entity Name ; top                                   ;
 ; Family                ; Cyclone IV E                          ;
@@ -93,7 +93,7 @@ applicable agreement for further details.
 +----------------+-------------------------------------------------------------------------------------------------+
 ; Device         ; EP4CE115F29C7                                                                                   ;
 ; JTAG usercode  ; 0xFFFFFFFF                                                                                      ;
-; Checksum       ; 0x006179F6                                                                                      ;
+; Checksum       ; 0x0061A0A4                                                                                      ;
 +----------------+-------------------------------------------------------------------------------------------------+
 
 
@@ -116,13 +116,13 @@ Info: Running Quartus II Assembler
     Info: programming logic devices manufactured by Altera and sold by 
     Info: Altera or its authorized distributors.  Please refer to the 
     Info: applicable agreement for further details.
-    Info: Processing started: Fri Jul 17 15:38:28 2026
+    Info: Processing started: Fri Jul 17 15:41:48 2026
 Info: Command: quartus_asm tictactoe
 Info: Writing out detailed assembly data for power analysis
 Info: Assembler is generating device programming files
 Info: Quartus II Assembler was successful. 0 errors, 0 warnings
     Info: Peak virtual memory: 471 megabytes
-    Info: Processing ended: Fri Jul 17 15:38:31 2026
+    Info: Processing ended: Fri Jul 17 15:41:51 2026
     Info: Elapsed time: 00:00:03
     Info: Total CPU time (on all processors): 00:00:03
 

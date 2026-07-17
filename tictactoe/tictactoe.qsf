@@ -20,10 +20,10 @@ set_global_assignment -name SOURCE_FILE renderer.v
 set_location_assignment -to CLOCK_50 PIN_Y2
 
 # ── Keys (active-low)
-set_location_assignment -to KEY[0] PIN_M23   # UP cursor
-set_location_assignment -to KEY[1] PIN_M21   # DOWN cursor
-set_location_assignment -to KEY[2] PIN_P21   # LEFT cursor
-set_location_assignment -to KEY[3] PIN_R24   # RIGHT cursor
+set_location_assignment -to KEY[0] PIN_M23   # LEFT  (physical leftmost)
+set_location_assignment -to KEY[1] PIN_M21   # DOWN
+set_location_assignment -to KEY[2] PIN_P21   # UP
+set_location_assignment -to KEY[3] PIN_R24   # RIGHT (physical rightmost)
 
 # ── Switches
 set_location_assignment -to SW[0]  PIN_AB28  # Place X

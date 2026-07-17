@@ -1,6 +1,10 @@
 // ============================================================
 //  cursor_controller.v — Board cursor position controller
-//  KEY[0]=UP, KEY[1]=DOWN, KEY[2]=LEFT, KEY[3]=RIGHT
+//  Physical key mapping (left-to-right on DE2-115):
+//    KEY[0] (leftmost) = LEFT
+//    KEY[1]            = DOWN
+//    KEY[2]            = UP
+//    KEY[3] (rightmost)= RIGHT
 //  Cursor wraps at edges, outputs cell index (0-8)
 // ============================================================
 
