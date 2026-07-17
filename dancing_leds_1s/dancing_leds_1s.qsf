@@ -1,0 +1,58 @@
+# Quartus Settings File — dancing_leds_1s
+# 10-pattern LED animation, 1 second per full cycle
+# Target: DE2-115 (Cyclone IV E, EP4CE115F29C7)
+set_global_assignment -name FAMILY "Cyclone IV E"
+set_global_assignment -name DEVICE EP4CE115F29C7
+set_global_assignment -name TOP_LEVEL_ENTITY top
+set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
+
+set_global_assignment -name SOURCE_FILE top.v
+set_global_assignment -name SOURCE_FILE dancing_leds.v
+set_global_assignment -name SOURCE_FILE clock_divider.v
+
+# ── 50 MHz Clock ───────────────────────────────────────────────
+set_location_assignment -to CLOCK_50 PIN_Y2
+
+# ── Reset (KEY0, active low) ───────────────────────────────────
+set_location_assignment -to KEY_0 PIN_M23
+
+# ── LEDR[17:0] — All 18 red LEDs ──────────────────────────────
+set_location_assignment -to LEDR[0]  PIN_G19
+set_location_assignment -to LEDR[1]  PIN_F19
+set_location_assignment -to LEDR[2]  PIN_E19
+set_location_assignment -to LEDR[3]  PIN_F21
+set_location_assignment -to LEDR[4]  PIN_F18
+set_location_assignment -to LEDR[5]  PIN_E18
+set_location_assignment -to LEDR[6]  PIN_J19
+set_location_assignment -to LEDR[7]  PIN_H19
+set_location_assignment -to LEDR[8]  PIN_J17
+set_location_assignment -to LEDR[9]  PIN_G17
+set_location_assignment -to LEDR[10] PIN_J15
+set_location_assignment -to LEDR[11] PIN_H16
+set_location_assignment -to LEDR[12] PIN_J16
+set_location_assignment -to LEDR[13] PIN_H17
+set_location_assignment -to LEDR[14] PIN_F15
+set_location_assignment -to LEDR[15] PIN_G15
+set_location_assignment -to LEDR[16] PIN_G16
+set_location_assignment -to LEDR[17] PIN_H15
+
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LEDR[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LEDR[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LEDR[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LEDR[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LEDR[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LEDR[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LEDR[6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LEDR[7]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LEDR[8]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LEDR[9]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LEDR[10]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LEDR[11]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LEDR[12]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LEDR[13]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LEDR[14]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LEDR[15]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LEDR[16]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LEDR[17]
+
+set_global_assignment -name LAST_QUARTUS_VERSION 10.0
