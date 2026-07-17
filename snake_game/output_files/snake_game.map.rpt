@@ -1,0 +1,951 @@
+Analysis & Synthesis report for snake_game
+Fri Jul 17 15:26:41 2026
+Quartus II Version 10.0 Build 218 06/27/2010 SJ Web Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Analysis & Synthesis Summary
+  3. Analysis & Synthesis Settings
+  4. Parallel Compilation
+  5. Analysis & Synthesis Source Files Read
+  6. Analysis & Synthesis Resource Usage Summary
+  7. Analysis & Synthesis Resource Utilization by Entity
+  8. State Machine - |top|snake_game:u_snake|dir_buf
+  9. State Machine - |top|snake_game:u_snake|snake_dir
+ 10. Registers Removed During Synthesis
+ 11. General Register Statistics
+ 12. Inverted Register Statistics
+ 13. Multiplexer Restructuring Statistics (Restructuring Performed)
+ 14. Parameter Settings for User Entity Instance: snake_game:u_snake
+ 15. Parameter Settings for User Entity Instance: snake_game:u_snake|vga_controller:vga
+ 16. Parameter Settings for Inferred Entity Instance: snake_game:u_snake|lpm_divide:Div2
+ 17. Parameter Settings for Inferred Entity Instance: snake_game:u_snake|lpm_divide:Div3
+ 18. Parameter Settings for Inferred Entity Instance: snake_game:u_snake|lpm_divide:Mod1
+ 19. Parameter Settings for Inferred Entity Instance: snake_game:u_snake|lpm_divide:Mod2
+ 20. Parameter Settings for Inferred Entity Instance: snake_game:u_snake|lpm_divide:Div4
+ 21. Parameter Settings for Inferred Entity Instance: snake_game:u_snake|lpm_divide:Mod3
+ 22. Parameter Settings for Inferred Entity Instance: snake_game:u_snake|lpm_divide:Div5
+ 23. Parameter Settings for Inferred Entity Instance: snake_game:u_snake|lpm_divide:Mod0
+ 24. Port Connectivity Checks: "snake_game:u_snake|seven_segment:s0"
+ 25. Port Connectivity Checks: "snake_game:u_snake|seven_segment:s1"
+ 26. Port Connectivity Checks: "snake_game:u_snake|seven_segment:s2"
+ 27. Port Connectivity Checks: "snake_game:u_snake|seven_segment:s3"
+ 28. Port Connectivity Checks: "snake_game:u_snake|seven_segment:s4"
+ 29. Port Connectivity Checks: "snake_game:u_snake|seven_segment:s5"
+ 30. Port Connectivity Checks: "snake_game:u_snake|seven_segment:s6"
+ 31. Port Connectivity Checks: "snake_game:u_snake|seven_segment:s7"
+ 32. Port Connectivity Checks: "snake_game:u_snake|debounce:db_sw0"
+ 33. Port Connectivity Checks: "snake_game:u_snake|debounce:db_k3"
+ 34. Port Connectivity Checks: "snake_game:u_snake|debounce:db_k2"
+ 35. Port Connectivity Checks: "snake_game:u_snake|debounce:db_k1"
+ 36. Analysis & Synthesis Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 1991-2010 Altera Corporation
+Your use of Altera Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, Altera MegaCore Function License 
+Agreement, or other applicable license agreement, including, 
+without limitation, that your use is for the sole purpose of 
+programming logic devices manufactured by Altera and sold by 
+Altera or its authorized distributors.  Please refer to the 
+applicable agreement for further details.
+
+
+
++-------------------------------------------------------------------------------+
+; Analysis & Synthesis Summary                                                  ;
++------------------------------------+------------------------------------------+
+; Analysis & Synthesis Status        ; Successful - Fri Jul 17 15:26:41 2026    ;
+; Quartus II Version                 ; 10.0 Build 218 06/27/2010 SJ Web Edition ;
+; Revision Name                      ; snake_game                               ;
+; Top-level Entity Name              ; top                                      ;
+; Family                             ; Cyclone IV E                             ;
+; Total logic elements               ; 2,771                                    ;
+;     Total combinational functions  ; 2,764                                    ;
+;     Dedicated logic registers      ; 1,256                                    ;
+; Total registers                    ; 1256                                     ;
+; Total pins                         ; 135                                      ;
+; Total virtual pins                 ; 0                                        ;
+; Total memory bits                  ; 0                                        ;
+; Embedded Multiplier 9-bit elements ; 0                                        ;
+; Total PLLs                         ; 0                                        ;
++------------------------------------+------------------------------------------+
+
+
++----------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Settings                                                                                        ;
++----------------------------------------------------------------------------+--------------------+--------------------+
+; Option                                                                     ; Setting            ; Default Value      ;
++----------------------------------------------------------------------------+--------------------+--------------------+
+; Device                                                                     ; EP4CE115F29C7      ;                    ;
+; Top-level entity name                                                      ; top                ; snake_game         ;
+; Family name                                                                ; Cyclone IV E       ; Stratix II         ;
+; Use smart compilation                                                      ; Off                ; Off                ;
+; Enable parallel Assembler and TimeQuest Timing Analyzer during compilation ; On                 ; On                 ;
+; Enable compact report table                                                ; Off                ; Off                ;
+; Restructure Multiplexers                                                   ; Auto               ; Auto               ;
+; Create Debugging Nodes for IP Cores                                        ; Off                ; Off                ;
+; Preserve fewer node names                                                  ; On                 ; On                 ;
+; Disable OpenCore Plus hardware evaluation                                  ; Off                ; Off                ;
+; Verilog Version                                                            ; Verilog_2001       ; Verilog_2001       ;
+; VHDL Version                                                               ; VHDL_1993          ; VHDL_1993          ;
+; State Machine Processing                                                   ; Auto               ; Auto               ;
+; Safe State Machine                                                         ; Off                ; Off                ;
+; Extract Verilog State Machines                                             ; On                 ; On                 ;
+; Extract VHDL State Machines                                                ; On                 ; On                 ;
+; Ignore Verilog initial constructs                                          ; Off                ; Off                ;
+; Iteration limit for constant Verilog loops                                 ; 5000               ; 5000               ;
+; Iteration limit for non-constant Verilog loops                             ; 250                ; 250                ;
+; Add Pass-Through Logic to Inferred RAMs                                    ; On                 ; On                 ;
+; Parallel Synthesis                                                         ; On                 ; On                 ;
+; DSP Block Balancing                                                        ; Auto               ; Auto               ;
+; NOT Gate Push-Back                                                         ; On                 ; On                 ;
+; Power-Up Don't Care                                                        ; On                 ; On                 ;
+; Remove Redundant Logic Cells                                               ; Off                ; Off                ;
+; Remove Duplicate Registers                                                 ; On                 ; On                 ;
+; Ignore CARRY Buffers                                                       ; Off                ; Off                ;
+; Ignore CASCADE Buffers                                                     ; Off                ; Off                ;
+; Ignore GLOBAL Buffers                                                      ; Off                ; Off                ;
+; Ignore ROW GLOBAL Buffers                                                  ; Off                ; Off                ;
+; Ignore LCELL Buffers                                                       ; Off                ; Off                ;
+; Ignore SOFT Buffers                                                        ; On                 ; On                 ;
+; Limit AHDL Integers to 32 Bits                                             ; Off                ; Off                ;
+; Optimization Technique                                                     ; Balanced           ; Balanced           ;
+; Carry Chain Length                                                         ; 70                 ; 70                 ;
+; Auto Carry Chains                                                          ; On                 ; On                 ;
+; Auto Open-Drain Pins                                                       ; On                 ; On                 ;
+; Perform WYSIWYG Primitive Resynthesis                                      ; Off                ; Off                ;
+; Auto ROM Replacement                                                       ; On                 ; On                 ;
+; Auto RAM Replacement                                                       ; On                 ; On                 ;
+; Auto DSP Block Replacement                                                 ; On                 ; On                 ;
+; Auto Shift Register Replacement                                            ; Auto               ; Auto               ;
+; Auto Clock Enable Replacement                                              ; On                 ; On                 ;
+; Strict RAM Replacement                                                     ; Off                ; Off                ;
+; Allow Synchronous Control Signals                                          ; On                 ; On                 ;
+; Force Use of Synchronous Clear Signals                                     ; Off                ; Off                ;
+; Auto RAM Block Balancing                                                   ; On                 ; On                 ;
+; Auto RAM to Logic Cell Conversion                                          ; Off                ; Off                ;
+; Auto Resource Sharing                                                      ; Off                ; Off                ;
+; Allow Any RAM Size For Recognition                                         ; Off                ; Off                ;
+; Allow Any ROM Size For Recognition                                         ; Off                ; Off                ;
+; Allow Any Shift Register Size For Recognition                              ; Off                ; Off                ;
+; Use LogicLock Constraints during Resource Balancing                        ; On                 ; On                 ;
+; Ignore translate_off and synthesis_off directives                          ; Off                ; Off                ;
+; Timing-Driven Synthesis                                                    ; On                 ; On                 ;
+; Report Parameter Settings                                                  ; On                 ; On                 ;
+; Report Source Assignments                                                  ; On                 ; On                 ;
+; Report Connectivity Checks                                                 ; On                 ; On                 ;
+; Ignore Maximum Fan-Out Assignments                                         ; Off                ; Off                ;
+; Synchronization Register Chain Length                                      ; 2                  ; 2                  ;
+; PowerPlay Power Optimization                                               ; Normal compilation ; Normal compilation ;
+; HDL message level                                                          ; Level2             ; Level2             ;
+; Suppress Register Optimization Related Messages                            ; Off                ; Off                ;
+; Number of Removed Registers Reported in Synthesis Report                   ; 5000               ; 5000               ;
+; Number of Inverted Registers Reported in Synthesis Report                  ; 100                ; 100                ;
+; Clock MUX Protection                                                       ; On                 ; On                 ;
+; Auto Gated Clock Conversion                                                ; Off                ; Off                ;
+; Block Design Naming                                                        ; Auto               ; Auto               ;
+; SDC constraint protection                                                  ; Off                ; Off                ;
+; Synthesis Effort                                                           ; Auto               ; Auto               ;
+; Shift Register Replacement - Allow Asynchronous Clear Signal               ; On                 ; On                 ;
+; Analysis & Synthesis Message Level                                         ; Medium             ; Medium             ;
+; Disable Register Merging Across Hierarchies                                ; Auto               ; Auto               ;
+; Resource Aware Inference For Block RAM                                     ; On                 ; On                 ;
+; Synthesis Seed                                                             ; 1                  ; 1                  ;
++----------------------------------------------------------------------------+--------------------+--------------------+
+
+
+Parallel compilation was disabled, but you have multiple processors available. Enable parallel compilation to reduce compilation time.
++-------------------------------------+
+; Parallel Compilation                ;
++----------------------------+--------+
+; Processors                 ; Number ;
++----------------------------+--------+
+; Number detected on machine ; 16     ;
+; Maximum allowed            ; 1      ;
++----------------------------+--------+
+
+
++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Source Files Read                                                                                                                                      ;
++----------------------------------+-----------------+------------------------------+-----------------------------------------------------------------------------------------+
+; File Name with User-Entered Path ; Used in Netlist ; File Type                    ; File Name with Absolute Path                                                            ;
++----------------------------------+-----------------+------------------------------+-----------------------------------------------------------------------------------------+
+; top.v                            ; yes             ; User Verilog HDL File        ; C:/Users/Admin/Documents/Test/De2-115-skill-agent/snake_game/top.v                      ;
+; snake_game.v                     ; yes             ; User Verilog HDL File        ; C:/Users/Admin/Documents/Test/De2-115-skill-agent/snake_game/snake_game.v               ;
+; vga_controller.v                 ; yes             ; User Verilog HDL File        ; C:/Users/Admin/Documents/Test/De2-115-skill-agent/snake_game/vga_controller.v           ;
+; debounce.v                       ; yes             ; User Verilog HDL File        ; C:/Users/Admin/Documents/Test/De2-115-skill-agent/snake_game/debounce.v                 ;
+; seven_segment.v                  ; yes             ; User Verilog HDL File        ; C:/Users/Admin/Documents/Test/De2-115-skill-agent/snake_game/seven_segment.v            ;
+; lpm_divide.tdf                   ; yes             ; Megafunction                 ; c:/altera/10.0/quartus/libraries/megafunctions/lpm_divide.tdf                           ;
+; db/lpm_divide_mhm.tdf            ; yes             ; Auto-Generated Megafunction  ; C:/Users/Admin/Documents/Test/De2-115-skill-agent/snake_game/db/lpm_divide_mhm.tdf      ;
+; db/sign_div_unsign_ekh.tdf       ; yes             ; Auto-Generated Megafunction  ; C:/Users/Admin/Documents/Test/De2-115-skill-agent/snake_game/db/sign_div_unsign_ekh.tdf ;
+; db/alt_u_div_g4f.tdf             ; yes             ; Auto-Generated Megafunction  ; C:/Users/Admin/Documents/Test/De2-115-skill-agent/snake_game/db/alt_u_div_g4f.tdf       ;
+; db/add_sub_7pc.tdf               ; yes             ; Auto-Generated Megafunction  ; C:/Users/Admin/Documents/Test/De2-115-skill-agent/snake_game/db/add_sub_7pc.tdf         ;
+; db/add_sub_8pc.tdf               ; yes             ; Auto-Generated Megafunction  ; C:/Users/Admin/Documents/Test/De2-115-skill-agent/snake_game/db/add_sub_8pc.tdf         ;
+; db/lpm_divide_jhm.tdf            ; yes             ; Auto-Generated Megafunction  ; C:/Users/Admin/Documents/Test/De2-115-skill-agent/snake_game/db/lpm_divide_jhm.tdf      ;
+; db/sign_div_unsign_bkh.tdf       ; yes             ; Auto-Generated Megafunction  ; C:/Users/Admin/Documents/Test/De2-115-skill-agent/snake_game/db/sign_div_unsign_bkh.tdf ;
+; db/alt_u_div_a4f.tdf             ; yes             ; Auto-Generated Megafunction  ; C:/Users/Admin/Documents/Test/De2-115-skill-agent/snake_game/db/alt_u_div_a4f.tdf       ;
+; db/lpm_divide_m9m.tdf            ; yes             ; Auto-Generated Megafunction  ; C:/Users/Admin/Documents/Test/De2-115-skill-agent/snake_game/db/lpm_divide_m9m.tdf      ;
+; db/lpm_divide_ihm.tdf            ; yes             ; Auto-Generated Megafunction  ; C:/Users/Admin/Documents/Test/De2-115-skill-agent/snake_game/db/lpm_divide_ihm.tdf      ;
+; db/sign_div_unsign_akh.tdf       ; yes             ; Auto-Generated Megafunction  ; C:/Users/Admin/Documents/Test/De2-115-skill-agent/snake_game/db/sign_div_unsign_akh.tdf ;
+; db/alt_u_div_84f.tdf             ; yes             ; Auto-Generated Megafunction  ; C:/Users/Admin/Documents/Test/De2-115-skill-agent/snake_game/db/alt_u_div_84f.tdf       ;
+; db/lpm_divide_l9m.tdf            ; yes             ; Auto-Generated Megafunction  ; C:/Users/Admin/Documents/Test/De2-115-skill-agent/snake_game/db/lpm_divide_l9m.tdf      ;
+; db/lpm_divide_hhm.tdf            ; yes             ; Auto-Generated Megafunction  ; C:/Users/Admin/Documents/Test/De2-115-skill-agent/snake_game/db/lpm_divide_hhm.tdf      ;
+; db/sign_div_unsign_9kh.tdf       ; yes             ; Auto-Generated Megafunction  ; C:/Users/Admin/Documents/Test/De2-115-skill-agent/snake_game/db/sign_div_unsign_9kh.tdf ;
+; db/alt_u_div_64f.tdf             ; yes             ; Auto-Generated Megafunction  ; C:/Users/Admin/Documents/Test/De2-115-skill-agent/snake_game/db/alt_u_div_64f.tdf       ;
+; db/lpm_divide_k9m.tdf            ; yes             ; Auto-Generated Megafunction  ; C:/Users/Admin/Documents/Test/De2-115-skill-agent/snake_game/db/lpm_divide_k9m.tdf      ;
+; db/sign_div_unsign_ckh.tdf       ; yes             ; Auto-Generated Megafunction  ; C:/Users/Admin/Documents/Test/De2-115-skill-agent/snake_game/db/sign_div_unsign_ckh.tdf ;
+; db/alt_u_div_74f.tdf             ; yes             ; Auto-Generated Megafunction  ; C:/Users/Admin/Documents/Test/De2-115-skill-agent/snake_game/db/alt_u_div_74f.tdf       ;
++----------------------------------+-----------------+------------------------------+-----------------------------------------------------------------------------------------+
+
+
++--------------------------------------------------------------+
+; Analysis & Synthesis Resource Usage Summary                  ;
++---------------------------------------------+----------------+
+; Resource                                    ; Usage          ;
++---------------------------------------------+----------------+
+; Estimated Total logic elements              ; 2,771          ;
+;                                             ;                ;
+; Total combinational functions               ; 2764           ;
+; Logic element usage by number of LUT inputs ;                ;
+;     -- 4 input functions                    ; 1113           ;
+;     -- 3 input functions                    ; 1188           ;
+;     -- <=2 input functions                  ; 463            ;
+;                                             ;                ;
+; Logic elements by mode                      ;                ;
+;     -- normal mode                          ; 2477           ;
+;     -- arithmetic mode                      ; 287            ;
+;                                             ;                ;
+; Total registers                             ; 1256           ;
+;     -- Dedicated logic registers            ; 1256           ;
+;     -- I/O registers                        ; 0              ;
+;                                             ;                ;
+; I/O pins                                    ; 135            ;
+; Maximum fan-out node                        ; CLOCK_50~input ;
+; Maximum fan-out                             ; 1234           ;
+; Total fan-out                               ; 11962          ;
+; Average fan-out                             ; 2.79           ;
++---------------------------------------------+----------------+
+
+
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                                                                                                                                         ;
++-------------------------------------------+-------------------+--------------+-------------+------------+--------------+---------+-----------+------+--------------+-------------------------------------------------------------------------------------------------------------------------+--------------+
+; Compilation Hierarchy Node                ; LC Combinationals ; LC Registers ; Memory Bits ; DSP Blocks ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                                                     ; Library Name ;
++-------------------------------------------+-------------------+--------------+-------------+------------+--------------+---------+-----------+------+--------------+-------------------------------------------------------------------------------------------------------------------------+--------------+
+; |top                                      ; 2764 (0)          ; 1256 (0)     ; 0           ; 0          ; 0            ; 0       ; 0         ; 135  ; 0            ; |top                                                                                                                    ;              ;
+;    |snake_game:u_snake|                   ; 2764 (2276)       ; 1256 (1146)  ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|snake_game:u_snake                                                                                                 ;              ;
+;       |debounce:db_k1|                    ; 29 (29)           ; 22 (22)      ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|snake_game:u_snake|debounce:db_k1                                                                                  ;              ;
+;       |debounce:db_k2|                    ; 29 (29)           ; 22 (22)      ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|snake_game:u_snake|debounce:db_k2                                                                                  ;              ;
+;       |debounce:db_k3|                    ; 29 (29)           ; 22 (22)      ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|snake_game:u_snake|debounce:db_k3                                                                                  ;              ;
+;       |debounce:db_sw0|                   ; 28 (28)           ; 22 (22)      ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|snake_game:u_snake|debounce:db_sw0                                                                                 ;              ;
+;       |lpm_divide:Div2|                   ; 25 (0)            ; 0 (0)        ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|snake_game:u_snake|lpm_divide:Div2                                                                                 ;              ;
+;          |lpm_divide_mhm:auto_generated|  ; 25 (0)            ; 0 (0)        ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|snake_game:u_snake|lpm_divide:Div2|lpm_divide_mhm:auto_generated                                                   ;              ;
+;             |sign_div_unsign_ekh:divider| ; 25 (0)            ; 0 (0)        ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|snake_game:u_snake|lpm_divide:Div2|lpm_divide_mhm:auto_generated|sign_div_unsign_ekh:divider                       ;              ;
+;                |alt_u_div_g4f:divider|    ; 25 (25)           ; 0 (0)        ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|snake_game:u_snake|lpm_divide:Div2|lpm_divide_mhm:auto_generated|sign_div_unsign_ekh:divider|alt_u_div_g4f:divider ;              ;
+;       |lpm_divide:Div3|                   ; 56 (0)            ; 0 (0)        ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|snake_game:u_snake|lpm_divide:Div3                                                                                 ;              ;
+;          |lpm_divide_jhm:auto_generated|  ; 56 (0)            ; 0 (0)        ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|snake_game:u_snake|lpm_divide:Div3|lpm_divide_jhm:auto_generated                                                   ;              ;
+;             |sign_div_unsign_bkh:divider| ; 56 (0)            ; 0 (0)        ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|snake_game:u_snake|lpm_divide:Div3|lpm_divide_jhm:auto_generated|sign_div_unsign_bkh:divider                       ;              ;
+;                |alt_u_div_a4f:divider|    ; 56 (56)           ; 0 (0)        ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|snake_game:u_snake|lpm_divide:Div3|lpm_divide_jhm:auto_generated|sign_div_unsign_bkh:divider|alt_u_div_a4f:divider ;              ;
+;       |lpm_divide:Div4|                   ; 43 (0)            ; 0 (0)        ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|snake_game:u_snake|lpm_divide:Div4                                                                                 ;              ;
+;          |lpm_divide_ihm:auto_generated|  ; 43 (0)            ; 0 (0)        ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|snake_game:u_snake|lpm_divide:Div4|lpm_divide_ihm:auto_generated                                                   ;              ;
+;             |sign_div_unsign_akh:divider| ; 43 (0)            ; 0 (0)        ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|snake_game:u_snake|lpm_divide:Div4|lpm_divide_ihm:auto_generated|sign_div_unsign_akh:divider                       ;              ;
+;                |alt_u_div_84f:divider|    ; 43 (43)           ; 0 (0)        ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|snake_game:u_snake|lpm_divide:Div4|lpm_divide_ihm:auto_generated|sign_div_unsign_akh:divider|alt_u_div_84f:divider ;              ;
+;       |lpm_divide:Div5|                   ; 30 (0)            ; 0 (0)        ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|snake_game:u_snake|lpm_divide:Div5                                                                                 ;              ;
+;          |lpm_divide_hhm:auto_generated|  ; 30 (0)            ; 0 (0)        ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|snake_game:u_snake|lpm_divide:Div5|lpm_divide_hhm:auto_generated                                                   ;              ;
+;             |sign_div_unsign_9kh:divider| ; 30 (0)            ; 0 (0)        ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|snake_game:u_snake|lpm_divide:Div5|lpm_divide_hhm:auto_generated|sign_div_unsign_9kh:divider                       ;              ;
+;                |alt_u_div_64f:divider|    ; 30 (30)           ; 0 (0)        ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|snake_game:u_snake|lpm_divide:Div5|lpm_divide_hhm:auto_generated|sign_div_unsign_9kh:divider|alt_u_div_64f:divider ;              ;
+;       |lpm_divide:Mod0|                   ; 5 (0)             ; 0 (0)        ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|snake_game:u_snake|lpm_divide:Mod0                                                                                 ;              ;
+;          |lpm_divide_k9m:auto_generated|  ; 5 (0)             ; 0 (0)        ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|snake_game:u_snake|lpm_divide:Mod0|lpm_divide_k9m:auto_generated                                                   ;              ;
+;             |sign_div_unsign_ckh:divider| ; 5 (0)             ; 0 (0)        ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|snake_game:u_snake|lpm_divide:Mod0|lpm_divide_k9m:auto_generated|sign_div_unsign_ckh:divider                       ;              ;
+;                |alt_u_div_74f:divider|    ; 5 (5)             ; 0 (0)        ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|snake_game:u_snake|lpm_divide:Mod0|lpm_divide_k9m:auto_generated|sign_div_unsign_ckh:divider|alt_u_div_74f:divider ;              ;
+;       |lpm_divide:Mod1|                   ; 24 (0)            ; 0 (0)        ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|snake_game:u_snake|lpm_divide:Mod1                                                                                 ;              ;
+;          |lpm_divide_m9m:auto_generated|  ; 24 (0)            ; 0 (0)        ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|snake_game:u_snake|lpm_divide:Mod1|lpm_divide_m9m:auto_generated                                                   ;              ;
+;             |sign_div_unsign_bkh:divider| ; 24 (0)            ; 0 (0)        ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|snake_game:u_snake|lpm_divide:Mod1|lpm_divide_m9m:auto_generated|sign_div_unsign_bkh:divider                       ;              ;
+;                |alt_u_div_a4f:divider|    ; 24 (24)           ; 0 (0)        ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|snake_game:u_snake|lpm_divide:Mod1|lpm_divide_m9m:auto_generated|sign_div_unsign_bkh:divider|alt_u_div_a4f:divider ;              ;
+;       |lpm_divide:Mod2|                   ; 59 (0)            ; 0 (0)        ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|snake_game:u_snake|lpm_divide:Mod2                                                                                 ;              ;
+;          |lpm_divide_m9m:auto_generated|  ; 59 (0)            ; 0 (0)        ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|snake_game:u_snake|lpm_divide:Mod2|lpm_divide_m9m:auto_generated                                                   ;              ;
+;             |sign_div_unsign_bkh:divider| ; 59 (0)            ; 0 (0)        ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|snake_game:u_snake|lpm_divide:Mod2|lpm_divide_m9m:auto_generated|sign_div_unsign_bkh:divider                       ;              ;
+;                |alt_u_div_a4f:divider|    ; 59 (59)           ; 0 (0)        ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|snake_game:u_snake|lpm_divide:Mod2|lpm_divide_m9m:auto_generated|sign_div_unsign_bkh:divider|alt_u_div_a4f:divider ;              ;
+;       |lpm_divide:Mod3|                   ; 46 (0)            ; 0 (0)        ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|snake_game:u_snake|lpm_divide:Mod3                                                                                 ;              ;
+;          |lpm_divide_l9m:auto_generated|  ; 46 (0)            ; 0 (0)        ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|snake_game:u_snake|lpm_divide:Mod3|lpm_divide_l9m:auto_generated                                                   ;              ;
+;             |sign_div_unsign_akh:divider| ; 46 (0)            ; 0 (0)        ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|snake_game:u_snake|lpm_divide:Mod3|lpm_divide_l9m:auto_generated|sign_div_unsign_akh:divider                       ;              ;
+;                |alt_u_div_84f:divider|    ; 46 (46)           ; 0 (0)        ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|snake_game:u_snake|lpm_divide:Mod3|lpm_divide_l9m:auto_generated|sign_div_unsign_akh:divider|alt_u_div_84f:divider ;              ;
+;       |seven_segment:s0|                  ; 7 (7)             ; 0 (0)        ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|snake_game:u_snake|seven_segment:s0                                                                                ;              ;
+;       |seven_segment:s1|                  ; 7 (7)             ; 0 (0)        ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|snake_game:u_snake|seven_segment:s1                                                                                ;              ;
+;       |seven_segment:s2|                  ; 7 (7)             ; 0 (0)        ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|snake_game:u_snake|seven_segment:s2                                                                                ;              ;
+;       |seven_segment:s3|                  ; 7 (7)             ; 0 (0)        ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|snake_game:u_snake|seven_segment:s3                                                                                ;              ;
+;       |seven_segment:s5|                  ; 4 (4)             ; 0 (0)        ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|snake_game:u_snake|seven_segment:s5                                                                                ;              ;
+;       |seven_segment:s6|                  ; 7 (7)             ; 0 (0)        ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|snake_game:u_snake|seven_segment:s6                                                                                ;              ;
+;       |seven_segment:s7|                  ; 3 (3)             ; 0 (0)        ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|snake_game:u_snake|seven_segment:s7                                                                                ;              ;
+;       |vga_controller:vga|                ; 43 (43)           ; 22 (22)      ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|snake_game:u_snake|vga_controller:vga                                                                              ;              ;
++-------------------------------------------+-------------------+--------------+-------------+------------+--------------+---------+-----------+------+--------------+-------------------------------------------------------------------------------------------------------------------------+--------------+
+Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
+
+
+Encoding Type:  One-Hot
++----------------------------------------------------------------------------------------------+
+; State Machine - |top|snake_game:u_snake|dir_buf                                              ;
++-------------------+----------------+------------------+------------------+-------------------+
+; Name              ; dir_buf.DIR_UP ; dir_buf.DIR_LEFT ; dir_buf.DIR_DOWN ; dir_buf.DIR_RIGHT ;
++-------------------+----------------+------------------+------------------+-------------------+
+; dir_buf.DIR_RIGHT ; 0              ; 0                ; 0                ; 0                 ;
+; dir_buf.DIR_DOWN  ; 0              ; 0                ; 1                ; 1                 ;
+; dir_buf.DIR_LEFT  ; 0              ; 1                ; 0                ; 1                 ;
+; dir_buf.DIR_UP    ; 1              ; 0                ; 0                ; 1                 ;
++-------------------+----------------+------------------+------------------+-------------------+
+
+
+Encoding Type:  One-Hot
++--------------------------------------------------------------------------------------------------------+
+; State Machine - |top|snake_game:u_snake|snake_dir                                                      ;
++---------------------+------------------+--------------------+--------------------+---------------------+
+; Name                ; snake_dir.DIR_UP ; snake_dir.DIR_LEFT ; snake_dir.DIR_DOWN ; snake_dir.DIR_RIGHT ;
++---------------------+------------------+--------------------+--------------------+---------------------+
+; snake_dir.DIR_RIGHT ; 0                ; 0                  ; 0                  ; 0                   ;
+; snake_dir.DIR_DOWN  ; 0                ; 0                  ; 1                  ; 1                   ;
+; snake_dir.DIR_LEFT  ; 0                ; 1                  ; 0                  ; 1                   ;
+; snake_dir.DIR_UP    ; 1                ; 0                  ; 0                  ; 1                   ;
++---------------------+------------------+--------------------+--------------------+---------------------+
+
+
++--------------------------------------------------------------------------------+
+; Registers Removed During Synthesis                                             ;
++---------------------------------------+----------------------------------------+
+; Register name                         ; Reason for Removal                     ;
++---------------------------------------+----------------------------------------+
+; snake_game:u_snake|score[0]           ; Stuck at GND due to stuck port data_in ;
+; snake_game:u_snake|dir_buf~6          ; Lost fanout                            ;
+; snake_game:u_snake|dir_buf~7          ; Lost fanout                            ;
+; snake_game:u_snake|snake_dir~2        ; Lost fanout                            ;
+; snake_game:u_snake|snake_dir~3        ; Lost fanout                            ;
+; Total Number of Removed Registers = 5 ;                                        ;
++---------------------------------------+----------------------------------------+
+
+
++------------------------------------------------------+
+; General Register Statistics                          ;
++----------------------------------------------+-------+
+; Statistic                                    ; Value ;
++----------------------------------------------+-------+
+; Total registers                              ; 1256  ;
+; Number of registers using Synchronous Clear  ; 128   ;
+; Number of registers using Synchronous Load   ; 4     ;
+; Number of registers using Asynchronous Clear ; 110   ;
+; Number of registers using Asynchronous Load  ; 0     ;
+; Number of registers using Clock Enable       ; 114   ;
+; Number of registers using Preset             ; 0     ;
++----------------------------------------------+-------+
+
+
++-------------------------------------------------------+
+; Inverted Register Statistics                          ;
++---------------------------------------------+---------+
+; Inverted Register                           ; Fan out ;
++---------------------------------------------+---------+
+; snake_game:u_snake|vga_controller:vga|hsync ; 1       ;
+; snake_game:u_snake|vga_controller:vga|vsync ; 1       ;
+; snake_game:u_snake|debounce:db_k1|stable    ; 5       ;
+; snake_game:u_snake|debounce:db_k2|stable    ; 5       ;
+; snake_game:u_snake|debounce:db_k3|stable    ; 5       ;
+; snake_game:u_snake|debounce:db_sw0|stable   ; 4       ;
+; snake_game:u_snake|debounce:db_sw0|prev     ; 1       ;
+; snake_game:u_snake|debounce:db_k2|prev      ; 1       ;
+; snake_game:u_snake|debounce:db_k3|prev      ; 1       ;
+; snake_game:u_snake|debounce:db_k1|prev      ; 1       ;
+; Total number of inverted registers = 10     ;         ;
++---------------------------------------------+---------+
+
+
++---------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                                ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+-------------------------------------------------+
+; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                      ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+-------------------------------------------------+
+; 3:1                ; 20 bits   ; 40 LEs        ; 20 LEs               ; 20 LEs                 ; Yes        ; |top|snake_game:u_snake|debounce:db_k1|cnt[10]  ;
+; 3:1                ; 20 bits   ; 40 LEs        ; 20 LEs               ; 20 LEs                 ; Yes        ; |top|snake_game:u_snake|debounce:db_k2|cnt[2]   ;
+; 3:1                ; 20 bits   ; 40 LEs        ; 20 LEs               ; 20 LEs                 ; Yes        ; |top|snake_game:u_snake|debounce:db_k3|cnt[18]  ;
+; 3:1                ; 20 bits   ; 40 LEs        ; 20 LEs               ; 20 LEs                 ; Yes        ; |top|snake_game:u_snake|debounce:db_sw0|cnt[17] ;
+; 4:1                ; 20 bits   ; 40 LEs        ; 20 LEs               ; 20 LEs                 ; Yes        ; |top|snake_game:u_snake|k0_db[4]                ;
+; 6:1                ; 6 bits    ; 24 LEs        ; 6 LEs                ; 18 LEs                 ; Yes        ; |top|snake_game:u_snake|tick_acc[2]             ;
+; 12:1               ; 16 bits   ; 128 LEs       ; 16 LEs               ; 112 LEs                ; Yes        ; |top|snake_game:u_snake|snake_x[2][2]           ;
+; 12:1               ; 20 bits   ; 160 LEs       ; 20 LEs               ; 140 LEs                ; Yes        ; |top|snake_game:u_snake|snake_y[1][4]           ;
+; 13:1               ; 2 bits    ; 16 LEs        ; 2 LEs                ; 14 LEs                 ; Yes        ; |top|snake_game:u_snake|snake_len[0]            ;
+; 13:1               ; 4 bits    ; 32 LEs        ; 4 LEs                ; 28 LEs                 ; Yes        ; |top|snake_game:u_snake|food_x[4]               ;
+; 13:1               ; 12 bits   ; 96 LEs        ; 12 LEs               ; 84 LEs                 ; Yes        ; |top|snake_game:u_snake|snake_len[4]            ;
+; 13:1               ; 6 bits    ; 48 LEs        ; 6 LEs                ; 42 LEs                 ; Yes        ; |top|snake_game:u_snake|food_y[0]               ;
+; 15:1               ; 2 bits    ; 20 LEs        ; 2 LEs                ; 18 LEs                 ; Yes        ; |top|snake_game:u_snake|tick_period[0]          ;
+; 15:1               ; 3 bits    ; 30 LEs        ; 3 LEs                ; 27 LEs                 ; Yes        ; |top|snake_game:u_snake|tick_period[5]          ;
+; 12:1               ; 2 bits    ; 16 LEs        ; 10 LEs               ; 6 LEs                  ; Yes        ; |top|snake_game:u_snake|state[2]                ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |top|snake_game:u_snake|Mux79                   ;
+; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |top|snake_game:u_snake|r                       ;
+; 5:1                ; 5 bits    ; 15 LEs        ; 10 LEs               ; 5 LEs                  ; No         ; |top|snake_game:u_snake|new_hx[4]               ;
+; 5:1                ; 5 bits    ; 15 LEs        ; 10 LEs               ; 5 LEs                  ; No         ; |top|snake_game:u_snake|new_hy[4]               ;
+; 15:1               ; 4 bits    ; 40 LEs        ; 16 LEs               ; 24 LEs                 ; No         ; |top|snake_game:u_snake|dir_buf                 ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+-------------------------------------------------+
+
+
++-----------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: snake_game:u_snake ;
++----------------+---------+--------------------------------------+
+; Parameter Name ; Value   ; Type                                 ;
++----------------+---------+--------------------------------------+
+; CELL           ; 010100  ; Unsigned Binary                      ;
+; COLS           ; 00000   ; Unsigned Binary                      ;
+; ROWS           ; 11000   ; Unsigned Binary                      ;
+; MAX_SNAKE      ; 1100100 ; Unsigned Binary                      ;
+; ST_RESET       ; 000     ; Unsigned Binary                      ;
+; ST_START       ; 001     ; Unsigned Binary                      ;
+; ST_PLAY        ; 010     ; Unsigned Binary                      ;
+; ST_PAUSE       ; 011     ; Unsigned Binary                      ;
+; ST_GOVER       ; 100     ; Unsigned Binary                      ;
+; ST_WIN         ; 101     ; Unsigned Binary                      ;
+; DIR_UP         ; 00      ; Unsigned Binary                      ;
+; DIR_DOWN       ; 01      ; Unsigned Binary                      ;
+; DIR_LEFT       ; 10      ; Unsigned Binary                      ;
+; DIR_RIGHT      ; 11      ; Unsigned Binary                      ;
++----------------+---------+--------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: snake_game:u_snake|vga_controller:vga ;
++----------------+-------+-----------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                      ;
++----------------+-------+-----------------------------------------------------------+
+; H_DISP         ; 640   ; Signed Integer                                            ;
+; H_FP           ; 16    ; Signed Integer                                            ;
+; H_SYNC         ; 96    ; Signed Integer                                            ;
+; H_BP           ; 48    ; Signed Integer                                            ;
+; H_TOTAL        ; 800   ; Signed Integer                                            ;
+; V_DISP         ; 480   ; Signed Integer                                            ;
+; V_FP           ; 10    ; Signed Integer                                            ;
+; V_SYNC         ; 2     ; Signed Integer                                            ;
+; V_BP           ; 33    ; Signed Integer                                            ;
+; V_TOTAL        ; 525   ; Signed Integer                                            ;
++----------------+-------+-----------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: snake_game:u_snake|lpm_divide:Div2 ;
++------------------------+----------------+-------------------------------------------+
+; Parameter Name         ; Value          ; Type                                      ;
++------------------------+----------------+-------------------------------------------+
+; LPM_WIDTHN             ; 8              ; Untyped                                   ;
+; LPM_WIDTHD             ; 7              ; Untyped                                   ;
+; LPM_NREPRESENTATION    ; UNSIGNED       ; Untyped                                   ;
+; LPM_DREPRESENTATION    ; UNSIGNED       ; Untyped                                   ;
+; LPM_PIPELINE           ; 0              ; Untyped                                   ;
+; LPM_REMAINDERPOSITIVE  ; TRUE           ; Untyped                                   ;
+; MAXIMIZE_SPEED         ; 5              ; Untyped                                   ;
+; CBXI_PARAMETER         ; lpm_divide_mhm ; Untyped                                   ;
+; CARRY_CHAIN            ; MANUAL         ; Untyped                                   ;
+; OPTIMIZE_FOR_SPEED     ; 5              ; Untyped                                   ;
+; AUTO_CARRY_CHAINS      ; ON             ; AUTO_CARRY                                ;
+; IGNORE_CARRY_BUFFERS   ; OFF            ; IGNORE_CARRY                              ;
+; AUTO_CASCADE_CHAINS    ; ON             ; AUTO_CASCADE                              ;
+; IGNORE_CASCADE_BUFFERS ; OFF            ; IGNORE_CASCADE                            ;
++------------------------+----------------+-------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: snake_game:u_snake|lpm_divide:Div3 ;
++------------------------+----------------+-------------------------------------------+
+; Parameter Name         ; Value          ; Type                                      ;
++------------------------+----------------+-------------------------------------------+
+; LPM_WIDTHN             ; 8              ; Untyped                                   ;
+; LPM_WIDTHD             ; 4              ; Untyped                                   ;
+; LPM_NREPRESENTATION    ; UNSIGNED       ; Untyped                                   ;
+; LPM_DREPRESENTATION    ; UNSIGNED       ; Untyped                                   ;
+; LPM_PIPELINE           ; 0              ; Untyped                                   ;
+; LPM_REMAINDERPOSITIVE  ; TRUE           ; Untyped                                   ;
+; MAXIMIZE_SPEED         ; 5              ; Untyped                                   ;
+; CBXI_PARAMETER         ; lpm_divide_jhm ; Untyped                                   ;
+; CARRY_CHAIN            ; MANUAL         ; Untyped                                   ;
+; OPTIMIZE_FOR_SPEED     ; 5              ; Untyped                                   ;
+; AUTO_CARRY_CHAINS      ; ON             ; AUTO_CARRY                                ;
+; IGNORE_CARRY_BUFFERS   ; OFF            ; IGNORE_CARRY                              ;
+; AUTO_CASCADE_CHAINS    ; ON             ; AUTO_CASCADE                              ;
+; IGNORE_CASCADE_BUFFERS ; OFF            ; IGNORE_CASCADE                            ;
++------------------------+----------------+-------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: snake_game:u_snake|lpm_divide:Mod1 ;
++------------------------+----------------+-------------------------------------------+
+; Parameter Name         ; Value          ; Type                                      ;
++------------------------+----------------+-------------------------------------------+
+; LPM_WIDTHN             ; 8              ; Untyped                                   ;
+; LPM_WIDTHD             ; 4              ; Untyped                                   ;
+; LPM_NREPRESENTATION    ; UNSIGNED       ; Untyped                                   ;
+; LPM_DREPRESENTATION    ; UNSIGNED       ; Untyped                                   ;
+; LPM_PIPELINE           ; 0              ; Untyped                                   ;
+; LPM_REMAINDERPOSITIVE  ; TRUE           ; Untyped                                   ;
+; MAXIMIZE_SPEED         ; 5              ; Untyped                                   ;
+; CBXI_PARAMETER         ; lpm_divide_m9m ; Untyped                                   ;
+; CARRY_CHAIN            ; MANUAL         ; Untyped                                   ;
+; OPTIMIZE_FOR_SPEED     ; 5              ; Untyped                                   ;
+; AUTO_CARRY_CHAINS      ; ON             ; AUTO_CARRY                                ;
+; IGNORE_CARRY_BUFFERS   ; OFF            ; IGNORE_CARRY                              ;
+; AUTO_CASCADE_CHAINS    ; ON             ; AUTO_CASCADE                              ;
+; IGNORE_CASCADE_BUFFERS ; OFF            ; IGNORE_CASCADE                            ;
++------------------------+----------------+-------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: snake_game:u_snake|lpm_divide:Mod2 ;
++------------------------+----------------+-------------------------------------------+
+; Parameter Name         ; Value          ; Type                                      ;
++------------------------+----------------+-------------------------------------------+
+; LPM_WIDTHN             ; 8              ; Untyped                                   ;
+; LPM_WIDTHD             ; 4              ; Untyped                                   ;
+; LPM_NREPRESENTATION    ; UNSIGNED       ; Untyped                                   ;
+; LPM_DREPRESENTATION    ; UNSIGNED       ; Untyped                                   ;
+; LPM_PIPELINE           ; 0              ; Untyped                                   ;
+; LPM_REMAINDERPOSITIVE  ; TRUE           ; Untyped                                   ;
+; MAXIMIZE_SPEED         ; 5              ; Untyped                                   ;
+; CBXI_PARAMETER         ; lpm_divide_m9m ; Untyped                                   ;
+; CARRY_CHAIN            ; MANUAL         ; Untyped                                   ;
+; OPTIMIZE_FOR_SPEED     ; 5              ; Untyped                                   ;
+; AUTO_CARRY_CHAINS      ; ON             ; AUTO_CARRY                                ;
+; IGNORE_CARRY_BUFFERS   ; OFF            ; IGNORE_CARRY                              ;
+; AUTO_CASCADE_CHAINS    ; ON             ; AUTO_CASCADE                              ;
+; IGNORE_CASCADE_BUFFERS ; OFF            ; IGNORE_CASCADE                            ;
++------------------------+----------------+-------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: snake_game:u_snake|lpm_divide:Div4 ;
++------------------------+----------------+-------------------------------------------+
+; Parameter Name         ; Value          ; Type                                      ;
++------------------------+----------------+-------------------------------------------+
+; LPM_WIDTHN             ; 7              ; Untyped                                   ;
+; LPM_WIDTHD             ; 4              ; Untyped                                   ;
+; LPM_NREPRESENTATION    ; UNSIGNED       ; Untyped                                   ;
+; LPM_DREPRESENTATION    ; UNSIGNED       ; Untyped                                   ;
+; LPM_PIPELINE           ; 0              ; Untyped                                   ;
+; LPM_REMAINDERPOSITIVE  ; TRUE           ; Untyped                                   ;
+; MAXIMIZE_SPEED         ; 5              ; Untyped                                   ;
+; CBXI_PARAMETER         ; lpm_divide_ihm ; Untyped                                   ;
+; CARRY_CHAIN            ; MANUAL         ; Untyped                                   ;
+; OPTIMIZE_FOR_SPEED     ; 5              ; Untyped                                   ;
+; AUTO_CARRY_CHAINS      ; ON             ; AUTO_CARRY                                ;
+; IGNORE_CARRY_BUFFERS   ; OFF            ; IGNORE_CARRY                              ;
+; AUTO_CASCADE_CHAINS    ; ON             ; AUTO_CASCADE                              ;
+; IGNORE_CASCADE_BUFFERS ; OFF            ; IGNORE_CASCADE                            ;
++------------------------+----------------+-------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: snake_game:u_snake|lpm_divide:Mod3 ;
++------------------------+----------------+-------------------------------------------+
+; Parameter Name         ; Value          ; Type                                      ;
++------------------------+----------------+-------------------------------------------+
+; LPM_WIDTHN             ; 7              ; Untyped                                   ;
+; LPM_WIDTHD             ; 4              ; Untyped                                   ;
+; LPM_NREPRESENTATION    ; UNSIGNED       ; Untyped                                   ;
+; LPM_DREPRESENTATION    ; UNSIGNED       ; Untyped                                   ;
+; LPM_PIPELINE           ; 0              ; Untyped                                   ;
+; LPM_REMAINDERPOSITIVE  ; TRUE           ; Untyped                                   ;
+; MAXIMIZE_SPEED         ; 5              ; Untyped                                   ;
+; CBXI_PARAMETER         ; lpm_divide_l9m ; Untyped                                   ;
+; CARRY_CHAIN            ; MANUAL         ; Untyped                                   ;
+; OPTIMIZE_FOR_SPEED     ; 5              ; Untyped                                   ;
+; AUTO_CARRY_CHAINS      ; ON             ; AUTO_CARRY                                ;
+; IGNORE_CARRY_BUFFERS   ; OFF            ; IGNORE_CARRY                              ;
+; AUTO_CASCADE_CHAINS    ; ON             ; AUTO_CASCADE                              ;
+; IGNORE_CASCADE_BUFFERS ; OFF            ; IGNORE_CASCADE                            ;
++------------------------+----------------+-------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: snake_game:u_snake|lpm_divide:Div5 ;
++------------------------+----------------+-------------------------------------------+
+; Parameter Name         ; Value          ; Type                                      ;
++------------------------+----------------+-------------------------------------------+
+; LPM_WIDTHN             ; 6              ; Untyped                                   ;
+; LPM_WIDTHD             ; 4              ; Untyped                                   ;
+; LPM_NREPRESENTATION    ; UNSIGNED       ; Untyped                                   ;
+; LPM_DREPRESENTATION    ; UNSIGNED       ; Untyped                                   ;
+; LPM_PIPELINE           ; 0              ; Untyped                                   ;
+; LPM_REMAINDERPOSITIVE  ; TRUE           ; Untyped                                   ;
+; MAXIMIZE_SPEED         ; 5              ; Untyped                                   ;
+; CBXI_PARAMETER         ; lpm_divide_hhm ; Untyped                                   ;
+; CARRY_CHAIN            ; MANUAL         ; Untyped                                   ;
+; OPTIMIZE_FOR_SPEED     ; 5              ; Untyped                                   ;
+; AUTO_CARRY_CHAINS      ; ON             ; AUTO_CARRY                                ;
+; IGNORE_CARRY_BUFFERS   ; OFF            ; IGNORE_CARRY                              ;
+; AUTO_CASCADE_CHAINS    ; ON             ; AUTO_CASCADE                              ;
+; IGNORE_CASCADE_BUFFERS ; OFF            ; IGNORE_CASCADE                            ;
++------------------------+----------------+-------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: snake_game:u_snake|lpm_divide:Mod0 ;
++------------------------+----------------+-------------------------------------------+
+; Parameter Name         ; Value          ; Type                                      ;
++------------------------+----------------+-------------------------------------------+
+; LPM_WIDTHN             ; 5              ; Untyped                                   ;
+; LPM_WIDTHD             ; 5              ; Untyped                                   ;
+; LPM_NREPRESENTATION    ; UNSIGNED       ; Untyped                                   ;
+; LPM_DREPRESENTATION    ; UNSIGNED       ; Untyped                                   ;
+; LPM_PIPELINE           ; 0              ; Untyped                                   ;
+; LPM_REMAINDERPOSITIVE  ; TRUE           ; Untyped                                   ;
+; MAXIMIZE_SPEED         ; 5              ; Untyped                                   ;
+; CBXI_PARAMETER         ; lpm_divide_k9m ; Untyped                                   ;
+; CARRY_CHAIN            ; MANUAL         ; Untyped                                   ;
+; OPTIMIZE_FOR_SPEED     ; 5              ; Untyped                                   ;
+; AUTO_CARRY_CHAINS      ; ON             ; AUTO_CARRY                                ;
+; IGNORE_CARRY_BUFFERS   ; OFF            ; IGNORE_CARRY                              ;
+; AUTO_CASCADE_CHAINS    ; ON             ; AUTO_CASCADE                              ;
+; IGNORE_CASCADE_BUFFERS ; OFF            ; IGNORE_CASCADE                            ;
++------------------------+----------------+-------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "snake_game:u_snake|seven_segment:s0"                                                                                                                                              ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                                                                                                                                            ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; bcd  ; Input ; Warning  ; Input port expression (32 bits) is wider than the input port (4 bits) it drives.  The 28 most-significant bit(s) in the expression will be dangling if they have no other fanouts. ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++-----------------------------------------------------------------+
+; Port Connectivity Checks: "snake_game:u_snake|seven_segment:s1" ;
++--------+-------+----------+-------------------------------------+
+; Port   ; Type  ; Severity ; Details                             ;
++--------+-------+----------+-------------------------------------+
+; bcd[3] ; Input ; Info     ; Stuck at GND                        ;
++--------+-------+----------+-------------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "snake_game:u_snake|seven_segment:s2"                                                                                                                                              ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                                                                                                                                            ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; bcd  ; Input ; Warning  ; Input port expression (32 bits) is wider than the input port (4 bits) it drives.  The 28 most-significant bit(s) in the expression will be dangling if they have no other fanouts. ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "snake_game:u_snake|seven_segment:s3"                                                                                                                                              ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                                                                                                                                            ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; bcd  ; Input ; Warning  ; Input port expression (32 bits) is wider than the input port (4 bits) it drives.  The 28 most-significant bit(s) in the expression will be dangling if they have no other fanouts. ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++-----------------------------------------------------------------+
+; Port Connectivity Checks: "snake_game:u_snake|seven_segment:s4" ;
++------+-------+----------+---------------------------------------+
+; Port ; Type  ; Severity ; Details                               ;
++------+-------+----------+---------------------------------------+
+; bcd  ; Input ; Info     ; Stuck at GND                          ;
++------+-------+----------+---------------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "snake_game:u_snake|seven_segment:s5"                                                                                                                                              ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                                                                                                                                            ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; bcd  ; Input ; Warning  ; Input port expression (32 bits) is wider than the input port (4 bits) it drives.  The 28 most-significant bit(s) in the expression will be dangling if they have no other fanouts. ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "snake_game:u_snake|seven_segment:s6"                                                                                                                                              ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                                                                                                                                            ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; bcd  ; Input ; Warning  ; Input port expression (32 bits) is wider than the input port (4 bits) it drives.  The 28 most-significant bit(s) in the expression will be dangling if they have no other fanouts. ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "snake_game:u_snake|seven_segment:s7"                                                                                                                                              ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                                                                                                                                            ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; bcd  ; Input ; Warning  ; Input port expression (32 bits) is wider than the input port (4 bits) it drives.  The 28 most-significant bit(s) in the expression will be dangling if they have no other fanouts. ;
++------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++-----------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "snake_game:u_snake|debounce:db_sw0"                                                        ;
++-------------+--------+----------+-------------------------------------------------------------------------------------+
+; Port        ; Type   ; Severity ; Details                                                                             ;
++-------------+--------+----------+-------------------------------------------------------------------------------------+
+; level       ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
+; rising_edge ; Output ; Info     ; Explicitly unconnected                                                              ;
++-------------+--------+----------+-------------------------------------------------------------------------------------+
+
+
++---------------------------------------------------------------+
+; Port Connectivity Checks: "snake_game:u_snake|debounce:db_k3" ;
++-------------+--------+----------+-----------------------------+
+; Port        ; Type   ; Severity ; Details                     ;
++-------------+--------+----------+-----------------------------+
+; rising_edge ; Output ; Info     ; Explicitly unconnected      ;
++-------------+--------+----------+-----------------------------+
+
+
++---------------------------------------------------------------+
+; Port Connectivity Checks: "snake_game:u_snake|debounce:db_k2" ;
++-------------+--------+----------+-----------------------------+
+; Port        ; Type   ; Severity ; Details                     ;
++-------------+--------+----------+-----------------------------+
+; rising_edge ; Output ; Info     ; Explicitly unconnected      ;
++-------------+--------+----------+-----------------------------+
+
+
++---------------------------------------------------------------+
+; Port Connectivity Checks: "snake_game:u_snake|debounce:db_k1" ;
++-------------+--------+----------+-----------------------------+
+; Port        ; Type   ; Severity ; Details                     ;
++-------------+--------+----------+-----------------------------+
+; rising_edge ; Output ; Info     ; Explicitly unconnected      ;
++-------------+--------+----------+-----------------------------+
+
+
++-------------------------------+
+; Analysis & Synthesis Messages ;
++-------------------------------+
+Info: *******************************************************************
+Info: Running Quartus II Analysis & Synthesis
+    Info: Version 10.0 Build 218 06/27/2010 SJ Web Edition
+    Info: Copyright (C) 1991-2010 Altera Corporation. All rights reserved.
+    Info: Your use of Altera Corporation's design tools, logic functions 
+    Info: and other software and tools, and its AMPP partner logic 
+    Info: functions, and any output files from any of the foregoing 
+    Info: (including device programming or simulation files), and any 
+    Info: associated documentation or information are expressly subject 
+    Info: to the terms and conditions of the Altera Program License 
+    Info: Subscription Agreement, Altera MegaCore Function License 
+    Info: Agreement, or other applicable license agreement, including, 
+    Info: without limitation, that your use is for the sole purpose of 
+    Info: programming logic devices manufactured by Altera and sold by 
+    Info: Altera or its authorized distributors.  Please refer to the 
+    Info: applicable agreement for further details.
+    Info: Processing started: Fri Jul 17 15:26:31 2026
+Info: Command: quartus_map snake_game --family="Cyclone IV E" --part=EP4CE115F29C7
+Info: Found 1 design units, including 1 entities, in source file top.v
+    Info: Found entity 1: top
+Warning (10229): Verilog HDL Expression warning at snake_game.v(38): truncated literal to match 5 bits
+Info: Found 1 design units, including 1 entities, in source file snake_game.v
+    Info: Found entity 1: snake_game
+Info: Found 1 design units, including 1 entities, in source file vga_controller.v
+    Info: Found entity 1: vga_controller
+Info: Found 1 design units, including 1 entities, in source file debounce.v
+    Info: Found entity 1: debounce
+Info: Found 1 design units, including 1 entities, in source file seven_segment.v
+    Info: Found entity 1: seven_segment
+Info: Elaborating entity "top" for the top level hierarchy
+Info: Elaborating entity "snake_game" for hierarchy "snake_game:u_snake"
+Warning (10230): Verilog HDL assignment warning at snake_game.v(61): truncated value with size 32 to match size of target (20)
+Warning (10230): Verilog HDL assignment warning at snake_game.v(102): truncated value with size 32 to match size of target (9)
+Warning (10230): Verilog HDL assignment warning at snake_game.v(107): truncated value with size 32 to match size of target (7)
+Warning (10230): Verilog HDL assignment warning at snake_game.v(113): truncated value with size 32 to match size of target (7)
+Warning (10230): Verilog HDL assignment warning at snake_game.v(127): truncated value with size 32 to match size of target (3)
+Warning (10230): Verilog HDL assignment warning at snake_game.v(143): truncated value with size 32 to match size of target (20)
+Warning (10230): Verilog HDL assignment warning at snake_game.v(214): truncated value with size 32 to match size of target (5)
+Warning (10230): Verilog HDL assignment warning at snake_game.v(217): truncated value with size 32 to match size of target (5)
+Warning (10230): Verilog HDL assignment warning at snake_game.v(269): truncated value with size 32 to match size of target (6)
+Warning (10230): Verilog HDL assignment warning at snake_game.v(300): truncated value with size 32 to match size of target (5)
+Warning (10230): Verilog HDL assignment warning at snake_game.v(301): truncated value with size 32 to match size of target (5)
+Warning (10230): Verilog HDL assignment warning at snake_game.v(342): truncated value with size 32 to match size of target (7)
+Warning (10230): Verilog HDL assignment warning at snake_game.v(343): truncated value with size 32 to match size of target (8)
+Warning (10230): Verilog HDL assignment warning at snake_game.v(344): truncated value with size 32 to match size of target (6)
+Warning (10230): Verilog HDL assignment warning at snake_game.v(349): truncated value with size 32 to match size of target (6)
+Warning (10230): Verilog HDL assignment warning at snake_game.v(353): truncated value with size 32 to match size of target (5)
+Warning (10230): Verilog HDL assignment warning at snake_game.v(354): truncated value with size 32 to match size of target (5)
+Warning (10230): Verilog HDL assignment warning at snake_game.v(388): truncated value with size 10 to match size of target (5)
+Warning (10230): Verilog HDL assignment warning at snake_game.v(389): truncated value with size 10 to match size of target (5)
+Warning (10230): Verilog HDL assignment warning at snake_game.v(406): truncated value with size 10 to match size of target (5)
+Warning (10230): Verilog HDL assignment warning at snake_game.v(407): truncated value with size 10 to match size of target (5)
+Info: Elaborating entity "vga_controller" for hierarchy "snake_game:u_snake|vga_controller:vga"
+Warning (10230): Verilog HDL assignment warning at vga_controller.v(33): truncated value with size 32 to match size of target (10)
+Warning (10230): Verilog HDL assignment warning at vga_controller.v(43): truncated value with size 32 to match size of target (10)
+Info: Elaborating entity "debounce" for hierarchy "snake_game:u_snake|debounce:db_k1"
+Warning (10230): Verilog HDL assignment warning at debounce.v(27): truncated value with size 32 to match size of target (20)
+Info: Elaborating entity "seven_segment" for hierarchy "snake_game:u_snake|seven_segment:s7"
+Info: Inferred 8 megafunctions from design logic
+    Info: Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "snake_game:u_snake|Div2"
+    Info: Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "snake_game:u_snake|Div3"
+    Info: Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "snake_game:u_snake|Mod1"
+    Info: Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "snake_game:u_snake|Mod2"
+    Info: Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "snake_game:u_snake|Div4"
+    Info: Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "snake_game:u_snake|Mod3"
+    Info: Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "snake_game:u_snake|Div5"
+    Info: Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "snake_game:u_snake|Mod0"
+Info: Elaborated megafunction instantiation "snake_game:u_snake|lpm_divide:Div2"
+Info: Instantiated megafunction "snake_game:u_snake|lpm_divide:Div2" with the following parameter:
+    Info: Parameter "LPM_WIDTHN" = "8"
+    Info: Parameter "LPM_WIDTHD" = "7"
+    Info: Parameter "LPM_NREPRESENTATION" = "UNSIGNED"
+    Info: Parameter "LPM_DREPRESENTATION" = "UNSIGNED"
+Info: Found 1 design units, including 1 entities, in source file db/lpm_divide_mhm.tdf
+    Info: Found entity 1: lpm_divide_mhm
+Info: Found 1 design units, including 1 entities, in source file db/sign_div_unsign_ekh.tdf
+    Info: Found entity 1: sign_div_unsign_ekh
+Info: Found 1 design units, including 1 entities, in source file db/alt_u_div_g4f.tdf
+    Info: Found entity 1: alt_u_div_g4f
+Info: Found 1 design units, including 1 entities, in source file db/add_sub_7pc.tdf
+    Info: Found entity 1: add_sub_7pc
+Info: Found 1 design units, including 1 entities, in source file db/add_sub_8pc.tdf
+    Info: Found entity 1: add_sub_8pc
+Info: Elaborated megafunction instantiation "snake_game:u_snake|lpm_divide:Div3"
+Info: Instantiated megafunction "snake_game:u_snake|lpm_divide:Div3" with the following parameter:
+    Info: Parameter "LPM_WIDTHN" = "8"
+    Info: Parameter "LPM_WIDTHD" = "4"
+    Info: Parameter "LPM_NREPRESENTATION" = "UNSIGNED"
+    Info: Parameter "LPM_DREPRESENTATION" = "UNSIGNED"
+Info: Found 1 design units, including 1 entities, in source file db/lpm_divide_jhm.tdf
+    Info: Found entity 1: lpm_divide_jhm
+Info: Found 1 design units, including 1 entities, in source file db/sign_div_unsign_bkh.tdf
+    Info: Found entity 1: sign_div_unsign_bkh
+Info: Found 1 design units, including 1 entities, in source file db/alt_u_div_a4f.tdf
+    Info: Found entity 1: alt_u_div_a4f
+Info: Elaborated megafunction instantiation "snake_game:u_snake|lpm_divide:Mod1"
+Info: Instantiated megafunction "snake_game:u_snake|lpm_divide:Mod1" with the following parameter:
+    Info: Parameter "LPM_WIDTHN" = "8"
+    Info: Parameter "LPM_WIDTHD" = "4"
+    Info: Parameter "LPM_NREPRESENTATION" = "UNSIGNED"
+    Info: Parameter "LPM_DREPRESENTATION" = "UNSIGNED"
+Info: Found 1 design units, including 1 entities, in source file db/lpm_divide_m9m.tdf
+    Info: Found entity 1: lpm_divide_m9m
+Info: Elaborated megafunction instantiation "snake_game:u_snake|lpm_divide:Mod2"
+Info: Instantiated megafunction "snake_game:u_snake|lpm_divide:Mod2" with the following parameter:
+    Info: Parameter "LPM_WIDTHN" = "8"
+    Info: Parameter "LPM_WIDTHD" = "4"
+    Info: Parameter "LPM_NREPRESENTATION" = "UNSIGNED"
+    Info: Parameter "LPM_DREPRESENTATION" = "UNSIGNED"
+Info: Elaborated megafunction instantiation "snake_game:u_snake|lpm_divide:Div4"
+Info: Instantiated megafunction "snake_game:u_snake|lpm_divide:Div4" with the following parameter:
+    Info: Parameter "LPM_WIDTHN" = "7"
+    Info: Parameter "LPM_WIDTHD" = "4"
+    Info: Parameter "LPM_NREPRESENTATION" = "UNSIGNED"
+    Info: Parameter "LPM_DREPRESENTATION" = "UNSIGNED"
+Info: Found 1 design units, including 1 entities, in source file db/lpm_divide_ihm.tdf
+    Info: Found entity 1: lpm_divide_ihm
+Info: Found 1 design units, including 1 entities, in source file db/sign_div_unsign_akh.tdf
+    Info: Found entity 1: sign_div_unsign_akh
+Info: Found 1 design units, including 1 entities, in source file db/alt_u_div_84f.tdf
+    Info: Found entity 1: alt_u_div_84f
+Info: Elaborated megafunction instantiation "snake_game:u_snake|lpm_divide:Mod3"
+Info: Instantiated megafunction "snake_game:u_snake|lpm_divide:Mod3" with the following parameter:
+    Info: Parameter "LPM_WIDTHN" = "7"
+    Info: Parameter "LPM_WIDTHD" = "4"
+    Info: Parameter "LPM_NREPRESENTATION" = "UNSIGNED"
+    Info: Parameter "LPM_DREPRESENTATION" = "UNSIGNED"
+Info: Found 1 design units, including 1 entities, in source file db/lpm_divide_l9m.tdf
+    Info: Found entity 1: lpm_divide_l9m
+Info: Elaborated megafunction instantiation "snake_game:u_snake|lpm_divide:Div5"
+Info: Instantiated megafunction "snake_game:u_snake|lpm_divide:Div5" with the following parameter:
+    Info: Parameter "LPM_WIDTHN" = "6"
+    Info: Parameter "LPM_WIDTHD" = "4"
+    Info: Parameter "LPM_NREPRESENTATION" = "UNSIGNED"
+    Info: Parameter "LPM_DREPRESENTATION" = "UNSIGNED"
+Info: Found 1 design units, including 1 entities, in source file db/lpm_divide_hhm.tdf
+    Info: Found entity 1: lpm_divide_hhm
+Info: Found 1 design units, including 1 entities, in source file db/sign_div_unsign_9kh.tdf
+    Info: Found entity 1: sign_div_unsign_9kh
+Info: Found 1 design units, including 1 entities, in source file db/alt_u_div_64f.tdf
+    Info: Found entity 1: alt_u_div_64f
+Info: Elaborated megafunction instantiation "snake_game:u_snake|lpm_divide:Mod0"
+Info: Instantiated megafunction "snake_game:u_snake|lpm_divide:Mod0" with the following parameter:
+    Info: Parameter "LPM_WIDTHN" = "5"
+    Info: Parameter "LPM_WIDTHD" = "5"
+    Info: Parameter "LPM_NREPRESENTATION" = "UNSIGNED"
+    Info: Parameter "LPM_DREPRESENTATION" = "UNSIGNED"
+Info: Found 1 design units, including 1 entities, in source file db/lpm_divide_k9m.tdf
+    Info: Found entity 1: lpm_divide_k9m
+Info: Found 1 design units, including 1 entities, in source file db/sign_div_unsign_ckh.tdf
+    Info: Found entity 1: sign_div_unsign_ckh
+Info: Found 1 design units, including 1 entities, in source file db/alt_u_div_74f.tdf
+    Info: Found entity 1: alt_u_div_74f
+Warning: 6 hierarchies have connectivity warnings - see the Connectivity Checks report folder
+Info: Registers with preset signals will power-up high
+Info: DEV_CLRn pin will set, and not reset, register with preset signal due to NOT Gate Push-Back
+Warning: Output pins are stuck at VCC or GND
+    Warning (13410): Pin "VGA_SYNC_N" is stuck at VCC
+    Warning (13410): Pin "HEX7[1]" is stuck at GND
+    Warning (13410): Pin "HEX4[0]" is stuck at GND
+    Warning (13410): Pin "HEX4[1]" is stuck at GND
+    Warning (13410): Pin "HEX4[2]" is stuck at GND
+    Warning (13410): Pin "HEX4[3]" is stuck at GND
+    Warning (13410): Pin "HEX4[4]" is stuck at GND
+    Warning (13410): Pin "HEX4[5]" is stuck at GND
+    Warning (13410): Pin "HEX4[6]" is stuck at VCC
+    Warning (13410): Pin "LEDR[6]" is stuck at GND
+    Warning (13410): Pin "LEDR[7]" is stuck at GND
+    Warning (13410): Pin "LEDR[8]" is stuck at GND
+    Warning (13410): Pin "LEDR[9]" is stuck at GND
+    Warning (13410): Pin "LEDR[10]" is stuck at GND
+    Warning (13410): Pin "LEDR[11]" is stuck at GND
+    Warning (13410): Pin "LEDR[12]" is stuck at GND
+    Warning (13410): Pin "LEDR[13]" is stuck at GND
+    Warning (13410): Pin "LEDR[14]" is stuck at GND
+    Warning (13410): Pin "LEDR[15]" is stuck at GND
+    Warning (13410): Pin "LEDR[16]" is stuck at GND
+    Warning (13410): Pin "LEDR[17]" is stuck at GND
+    Warning (13410): Pin "LEDG[7]" is stuck at GND
+    Warning (13410): Pin "LEDG[8]" is stuck at GND
+Info: Timing-Driven Synthesis is running
+Info: 4 registers lost all their fanouts during netlist optimizations. The first 4 are displayed below.
+    Info: Register "snake_game:u_snake|dir_buf~6" lost all its fanouts during netlist optimizations.
+    Info: Register "snake_game:u_snake|dir_buf~7" lost all its fanouts during netlist optimizations.
+    Info: Register "snake_game:u_snake|snake_dir~2" lost all its fanouts during netlist optimizations.
+    Info: Register "snake_game:u_snake|snake_dir~3" lost all its fanouts during netlist optimizations.
+Info: Found the following redundant logic cells in design
+    Info (17048): Logic cell "snake_game:u_snake|lpm_divide:Mod1|lpm_divide_m9m:auto_generated|sign_div_unsign_bkh:divider|alt_u_div_a4f:divider|add_sub_7_result_int[0]~0"
+    Info (17048): Logic cell "snake_game:u_snake|lpm_divide:Mod1|lpm_divide_m9m:auto_generated|sign_div_unsign_bkh:divider|alt_u_div_a4f:divider|add_sub_6_result_int[0]~10"
+Info: Generating hard_block partition "hard_block:auto_generated_inst"
+Warning: Design contains 12 input pin(s) that do not drive logic
+    Warning (15610): No output dependent on input pin "SW[6]"
+    Warning (15610): No output dependent on input pin "SW[7]"
+    Warning (15610): No output dependent on input pin "SW[8]"
+    Warning (15610): No output dependent on input pin "SW[9]"
+    Warning (15610): No output dependent on input pin "SW[10]"
+    Warning (15610): No output dependent on input pin "SW[11]"
+    Warning (15610): No output dependent on input pin "SW[12]"
+    Warning (15610): No output dependent on input pin "SW[13]"
+    Warning (15610): No output dependent on input pin "SW[14]"
+    Warning (15610): No output dependent on input pin "SW[15]"
+    Warning (15610): No output dependent on input pin "SW[16]"
+    Warning (15610): No output dependent on input pin "SW[17]"
+Info: Implemented 2907 device resources after synthesis - the final resource count might be different
+    Info: Implemented 23 input pins
+    Info: Implemented 112 output pins
+    Info: Implemented 2772 logic cells
+Info: Quartus II Analysis & Synthesis was successful. 0 errors, 63 warnings
+    Info: Peak virtual memory: 279 megabytes
+    Info: Processing ended: Fri Jul 17 15:26:41 2026
+    Info: Elapsed time: 00:00:10
+    Info: Total CPU time (on all processors): 00:00:12
+
+

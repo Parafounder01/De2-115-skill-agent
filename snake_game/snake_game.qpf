@@ -1,0 +1,5 @@
+# Quartus II Project File
+QUARTUS_VERSION = "10.0"
+DATE = "17:00:00  July 17, 2026"
+
+PROJECT_REVISION = "snake_game"
