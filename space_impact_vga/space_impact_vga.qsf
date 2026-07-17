@@ -1,0 +1,83 @@
+# Quartus Settings File — DE2-115 Space Impact VGA Game
+set_global_assignment -name FAMILY "Cyclone IV E"
+set_global_assignment -name DEVICE EP4CE115F29C7
+set_global_assignment -name TOP_LEVEL_ENTITY space_impact_vga
+set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
+set_global_assignment -name SOURCE_FILE space_impact_vga.v
+set_global_assignment -name SOURCE_FILE vga_sync.v
+
+# ── Clock
+set_location_assignment -to clk   PIN_Y2
+
+# ── Keys
+set_location_assignment -to rst_n PIN_M23   # KEY0 (exit/reset)
+set_location_assignment -to key1  PIN_M21   # KEY1 (shoot)
+set_location_assignment -to key2  PIN_P21   # KEY2 (down)
+set_location_assignment -to key3  PIN_R24   # KEY3 (up)
+
+# ── VGA
+set_location_assignment -to vga_r[0] PIN_E12
+set_location_assignment -to vga_r[1] PIN_E11
+set_location_assignment -to vga_r[2] PIN_D10
+set_location_assignment -to vga_r[3] PIN_F12
+set_location_assignment -to vga_r[4] PIN_G10
+set_location_assignment -to vga_r[5] PIN_J12
+set_location_assignment -to vga_r[6] PIN_H8
+set_location_assignment -to vga_r[7] PIN_H10
+
+set_location_assignment -to vga_g[0] PIN_G8
+set_location_assignment -to vga_g[1] PIN_G11
+set_location_assignment -to vga_g[2] PIN_F8
+set_location_assignment -to vga_g[3] PIN_H12
+set_location_assignment -to vga_g[4] PIN_C8
+set_location_assignment -to vga_g[5] PIN_B8
+set_location_assignment -to vga_g[6] PIN_F10
+set_location_assignment -to vga_g[7] PIN_C9
+
+set_location_assignment -to vga_b[0] PIN_B10
+set_location_assignment -to vga_b[1] PIN_A10
+set_location_assignment -to vga_b[2] PIN_C11
+set_location_assignment -to vga_b[3] PIN_B11
+set_location_assignment -to vga_b[4] PIN_A11
+set_location_assignment -to vga_b[5] PIN_C12
+set_location_assignment -to vga_b[6] PIN_D11
+set_location_assignment -to vga_b[7] PIN_D12
+
+set_location_assignment -to vga_hs PIN_G13
+set_location_assignment -to vga_vs PIN_C13
+set_location_assignment -to vga_clk PIN_A12
+set_location_assignment -to vga_blank_n PIN_F11
+set_location_assignment -to vga_sync_n PIN_C10
+
+# ── IO Standards for VGA
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to vga_r[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to vga_r[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to vga_r[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to vga_r[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to vga_r[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to vga_r[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to vga_r[6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to vga_r[7]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to vga_g[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to vga_g[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to vga_g[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to vga_g[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to vga_g[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to vga_g[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to vga_g[6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to vga_g[7]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to vga_b[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to vga_b[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to vga_b[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to vga_b[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to vga_b[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to vga_b[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to vga_b[6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to vga_b[7]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to vga_hs
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to vga_vs
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to vga_clk
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to vga_blank_n
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to vga_sync_n
+
+set_global_assignment -name LAST_QUARTUS_VERSION 10.0
