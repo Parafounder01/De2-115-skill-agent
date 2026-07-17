@@ -305,8 +305,8 @@ module snake_vga (
 
     // Is this cell a snake segment? Is it the head?
     reg  px_snake, px_head;
-    integer ri;
     always @(*) begin
+        integer ri;
         px_snake = 0;
         px_head  = 0;
         for (ri = 0; ri < MAX_SNAKE; ri = ri + 1) begin
@@ -346,28 +346,15 @@ module snake_vga (
             end else begin
                 // ── Game field ──
                 if (in_grid) begin
-                    // Background: dark green gradient based on position
-                    r_out = 8'h00;
-                    g_out = {4'h0, gx[3:0]} + {4'h0, gy[3:0]} + 8'h10;
-                    b_out = 8'h08;
+                    // Background: solid dark green
+                    r_out = 8'h00; g_out = 8'h18; b_out = 8'h06;
 
-                    // Grid line (subtle)
-                    if (px == 0 || py == 0) begin
-                        r_out = 8'h00; g_out = 8'h22; b_out = 8'h00;
-                    end
-
-                    // Snake body (with segment index variation)
+                    // Snake body: solid medium green
                     if (px_snake && ~px_head) begin
-                        r_out = 8'h00;
-                        g_out = 8'h88 + {4'h0, ri[3:0]};  // gradient
-                        b_out = 8'h00;
-                        // Body border (slightly darker)
-                        if (px == 0 || px == CELL_SIZE-1 || py == 0 || py == CELL_SIZE-1) begin
+                        r_out = 8'h00; g_out = 8'h99; b_out = 8'h00;
+                        // Body border edge: darker
+                        if (px <= 1 || px >= CELL_SIZE-2 || py <= 1 || py >= CELL_SIZE-2) begin
                             g_out = 8'h44;
-                        end
-                        // Eyes on first body segment
-                        if (ri == 1 && py >= 12 && py <= 18 && (px == 8 || px == 23)) begin
-                            r_out = 8'hFF; g_out = 8'hFF; b_out = 8'h00;  // yellow eyes
                         end
                     end
 
