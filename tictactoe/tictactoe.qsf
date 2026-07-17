@@ -1,30 +1,35 @@
-# Quartus Settings File — DE2-115 Snake Game (Nokia 3310-style)
+# Quartus Settings File — DE2-115 Tic-Tac-Toe with AI
 set_global_assignment -name FAMILY "Cyclone IV E"
 set_global_assignment -name DEVICE EP4CE115F29C7
 set_global_assignment -name TOP_LEVEL_ENTITY top
 set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
 set_global_assignment -name SOURCE_FILE top.v
-set_global_assignment -name SOURCE_FILE snake_game.v
+set_global_assignment -name SOURCE_FILE clock_divider.v
 set_global_assignment -name SOURCE_FILE vga_controller.v
-set_global_assignment -name SOURCE_FILE debounce.v
+set_global_assignment -name SOURCE_FILE input_debounce.v
 set_global_assignment -name SOURCE_FILE seven_segment.v
+set_global_assignment -name SOURCE_FILE board_memory.v
+set_global_assignment -name SOURCE_FILE cursor_controller.v
+set_global_assignment -name SOURCE_FILE winner_detector.v
+set_global_assignment -name SOURCE_FILE score_counter.v
+set_global_assignment -name SOURCE_FILE game_fsm.v
+set_global_assignment -name SOURCE_FILE ai_engine.v
+set_global_assignment -name SOURCE_FILE renderer.v
 
 # ── Clock 50 MHz
 set_location_assignment -to CLOCK_50 PIN_Y2
 
 # ── Keys (active-low)
-set_location_assignment -to KEY[0] PIN_M23   # reset / start
-set_location_assignment -to KEY[1] PIN_M21   # UP
-set_location_assignment -to KEY[2] PIN_P21   # DOWN
-set_location_assignment -to KEY[3] PIN_R24   # LEFT
+set_location_assignment -to KEY[0] PIN_M23   # UP cursor
+set_location_assignment -to KEY[1] PIN_M21   # DOWN cursor
+set_location_assignment -to KEY[2] PIN_P21   # LEFT cursor
+set_location_assignment -to KEY[3] PIN_R24   # RIGHT cursor
 
 # ── Switches
-set_location_assignment -to SW[0]  PIN_AB28  # RIGHT
-set_location_assignment -to SW[1]  PIN_AC28  # difficulty bit0
-set_location_assignment -to SW[2]  PIN_AC27  # difficulty bit1
-set_location_assignment -to SW[3]  PIN_AD27  # win_len bit0
-set_location_assignment -to SW[4]  PIN_AB27  # win_len bit1
-set_location_assignment -to SW[5]  PIN_AC26  # pause
+set_location_assignment -to SW[0]  PIN_AB28  # Place X
+set_location_assignment -to SW[1]  PIN_AC28  # Restart
+set_location_assignment -to SW[2]  PIN_AC27  # Easy AI
+set_location_assignment -to SW[3]  PIN_AD27  # Hard AI
 
 # ── VGA
 set_location_assignment -to VGA_R[0] PIN_E12
@@ -35,7 +40,6 @@ set_location_assignment -to VGA_R[4] PIN_G10
 set_location_assignment -to VGA_R[5] PIN_J12
 set_location_assignment -to VGA_R[6] PIN_H8
 set_location_assignment -to VGA_R[7] PIN_H10
-
 set_location_assignment -to VGA_G[0] PIN_G8
 set_location_assignment -to VGA_G[1] PIN_G11
 set_location_assignment -to VGA_G[2] PIN_F8
@@ -44,7 +48,6 @@ set_location_assignment -to VGA_G[4] PIN_C8
 set_location_assignment -to VGA_G[5] PIN_B8
 set_location_assignment -to VGA_G[6] PIN_F10
 set_location_assignment -to VGA_G[7] PIN_C9
-
 set_location_assignment -to VGA_B[0] PIN_B10
 set_location_assignment -to VGA_B[1] PIN_A10
 set_location_assignment -to VGA_B[2] PIN_C11
@@ -53,14 +56,12 @@ set_location_assignment -to VGA_B[4] PIN_A11
 set_location_assignment -to VGA_B[5] PIN_C12
 set_location_assignment -to VGA_B[6] PIN_D11
 set_location_assignment -to VGA_B[7] PIN_D12
-
 set_location_assignment -to VGA_HS      PIN_G13
 set_location_assignment -to VGA_VS      PIN_C13
 set_location_assignment -to VGA_CLK     PIN_A12
 set_location_assignment -to VGA_BLANK_N PIN_F11
 set_location_assignment -to VGA_SYNC_N  PIN_C10
 
-# ── IO Standards for VGA
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_R[0]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_R[1]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_R[2]
@@ -99,7 +100,6 @@ set_location_assignment -to HEX0[3] PIN_L26
 set_location_assignment -to HEX0[4] PIN_L25
 set_location_assignment -to HEX0[5] PIN_J22
 set_location_assignment -to HEX0[6] PIN_H22
-
 set_location_assignment -to HEX1[0] PIN_M24
 set_location_assignment -to HEX1[1] PIN_Y22
 set_location_assignment -to HEX1[2] PIN_W21
@@ -107,7 +107,6 @@ set_location_assignment -to HEX1[3] PIN_W22
 set_location_assignment -to HEX1[4] PIN_W25
 set_location_assignment -to HEX1[5] PIN_U23
 set_location_assignment -to HEX1[6] PIN_U24
-
 set_location_assignment -to HEX2[0] PIN_AA25
 set_location_assignment -to HEX2[1] PIN_AA26
 set_location_assignment -to HEX2[2] PIN_Y25
@@ -115,7 +114,6 @@ set_location_assignment -to HEX2[3] PIN_W26
 set_location_assignment -to HEX2[4] PIN_Y26
 set_location_assignment -to HEX2[5] PIN_W27
 set_location_assignment -to HEX2[6] PIN_W28
-
 set_location_assignment -to HEX3[0] PIN_V21
 set_location_assignment -to HEX3[1] PIN_U21
 set_location_assignment -to HEX3[2] PIN_AB20
@@ -123,7 +121,6 @@ set_location_assignment -to HEX3[3] PIN_AA21
 set_location_assignment -to HEX3[4] PIN_AD24
 set_location_assignment -to HEX3[5] PIN_AF23
 set_location_assignment -to HEX3[6] PIN_Y19
-
 set_location_assignment -to HEX4[0] PIN_AB19
 set_location_assignment -to HEX4[1] PIN_AA19
 set_location_assignment -to HEX4[2] PIN_AG21
@@ -131,7 +128,6 @@ set_location_assignment -to HEX4[3] PIN_AH21
 set_location_assignment -to HEX4[4] PIN_AE19
 set_location_assignment -to HEX4[5] PIN_AF19
 set_location_assignment -to HEX4[6] PIN_AE18
-
 set_location_assignment -to HEX5[0] PIN_AD18
 set_location_assignment -to HEX5[1] PIN_AC18
 set_location_assignment -to HEX5[2] PIN_AB18
@@ -139,7 +135,6 @@ set_location_assignment -to HEX5[3] PIN_AH19
 set_location_assignment -to HEX5[4] PIN_AG19
 set_location_assignment -to HEX5[5] PIN_AF18
 set_location_assignment -to HEX5[6] PIN_AH18
-
 set_location_assignment -to HEX6[0] PIN_AA17
 set_location_assignment -to HEX6[1] PIN_AB16
 set_location_assignment -to HEX6[2] PIN_AA16
@@ -147,7 +142,6 @@ set_location_assignment -to HEX6[3] PIN_AB17
 set_location_assignment -to HEX6[4] PIN_AB15
 set_location_assignment -to HEX6[5] PIN_AA15
 set_location_assignment -to HEX6[6] PIN_AC17
-
 set_location_assignment -to HEX7[0] PIN_AD17
 set_location_assignment -to HEX7[1] PIN_AE17
 set_location_assignment -to HEX7[2] PIN_AG17
@@ -156,7 +150,6 @@ set_location_assignment -to HEX7[4] PIN_AF17
 set_location_assignment -to HEX7[5] PIN_AG18
 set_location_assignment -to HEX7[6] PIN_AA14
 
-# ── HEX I/O standard
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX0[0]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX0[1]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX0[2]

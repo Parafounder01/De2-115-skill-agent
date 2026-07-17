@@ -1,6 +1,6 @@
 // ============================================================
-//  seven_segment.v — HEX display driver for DE2-115
-//  Converts BCD value to 7-segment (active-low)
+//  seven_segment.v — 7-segment decoder (active-low)
+//  Maps 4-bit BCD to 7-segment pattern for DE2-115
 // ============================================================
 
 module seven_segment (
@@ -21,7 +21,7 @@ module seven_segment (
             4'd7: seg_r = 7'b1111000;
             4'd8: seg_r = 7'b0000000;
             4'd9: seg_r = 7'b0010000;
-            default: seg_r = 7'b1111111;  // blank
+            default: seg_r = 7'b1111111;  // all off
         endcase
     end
     assign seg = seg_r;
